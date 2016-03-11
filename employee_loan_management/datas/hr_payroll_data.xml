@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+		<record id="hr_rule_loan" model="hr.salary.rule">
+			<field name="name">Loan Deduction</field>
+			<field name="sequence" eval="100"/>
+			<field name="code">DELN</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = payslip.total_amount_paid</field>
+		</record>
+
+        <record id="hr_rule_loan_cl" model="hr.salary.rule">
+			<field name="name">Car Loan</field>
+			<field name="sequence" eval="100"/>
+			<field name="code">CRLN</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = payslip.total_amount_paid_cl</field>
+		</record>
+
+        <record id="hr_rule_loan_el" model="hr.salary.rule">
+			<field name="name">EIPS Loan</field>
+			<field name="sequence" eval="152"/>
+			<field name="code">EILN</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = payslip.total_amount_paid_el</field>
+		</record>
+
+        <record id="hr_rule_loan_pl" model="hr.salary.rule">
+			<field name="name">Provident Fund Loan</field>
+			<field name="sequence" eval="153"/>
+			<field name="code">PFLN</field>
+			<field name="category_id" ref="hr_payroll.DED"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = payslip.total_amount_paid_pl</field>
+		</record>
+	</data>
+</openerp>
