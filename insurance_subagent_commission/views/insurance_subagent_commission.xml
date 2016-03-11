@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         <record id="customer_product_status_form" model="ir.ui.view">
+            <field name="name">customer.product.status.form</field>
+            <field name="model">customer.product.status</field>
+            <field name="arch" type="xml">
+                <form string="Customer Status">
+                    <group>
+                        <group>
+                            <field name="date_created"/>
+                            <field name="customer_related"/>
+                            <field name="status"/>
+                            <field name="policy_number"/>
+                            <label for="policy_start" string="Policy Period"/>
+                            <div>
+                                <field name="policy_start" class="oe_inline"/> - <field name="policy_end" class="oe_inline"/>
+                            </div>
+                            <field name="renewal_due"/>
+                            <field name="type_of_insurance"/>
+                        </group>
+                        <group>
+                            <field name="premium_paid"/>
+                            <field name="commission_pcnt"/>
+                            <field name="gross_commission"/>
+                            <field name="current_payment"/>
+                            <field name="suppliers_on_policy" string="Insurance Company"/>
+                        </group>
+
+                    </group>
+                    <field name="ins_remarks" placeholder="Remarks..."/>
+                </form>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="customer_product_tree">
+            <field name="name">customer.product.status.tree</field>
+            <field name="model">customer.product.status</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date_created"/>
+                    <field name="customer_related"/>
+                    <field name="status"/>
+                    <field name="policy_number"/>
+                    <field name="suppliers_on_policy"/>
+                    <field name="policy_start"/>
+                    <field name="policy_end"/>
+                    <field name="renewal_due"/>
+                    <field name="type_of_insurance"/>
+                    <field name="premium_paid"/>
+                    <field name="commission_pcnt"/>
+                    <field name="gross_commission"/>
+                    <field name="current_payment"/>
+                    <field name="ins_remarks"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_customer_product_filter" model="ir.ui.view">
+            <field name="name">customer.product.status.select</field>
+            <field name="model">customer.product.status</field>
+            <field name="arch" type="xml">
+                <search string="Search Information">
+                    <!--<field name="number" string="Invoice" filter_domain="['|','|','|', ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]"/>-->
+                    <!--<filter name="draft" string="Draft" domain="[('state','=','draft')]" help="Draft Invoices"/>-->
+                    <!--<filter name="proforma" string="Proforma" domain="[('state','=','proforma2')]" help="Proforma Invoices" groups="account.group_proforma_invoices"/>-->
+                    <!--<filter name="invoices" string="Invoices" domain="[('state','not in',['draft','cancel'])]" help="Proforma/Open/Paid Invoices"/>-->
+                    <!--<filter name="unpaid" string="Unpaid" domain="[('state','=','open')]" help="Unpaid Invoices"/>-->
+                    <filter name="payment_collection" string="Payment Collected"
+                            domain="[('current_payment','=','collected')]"/>
+                    <filter name="renewal_due_one" string="Inactive"
+                            domain="[('renewal_due','=','inactive')]"/>
+                    <filter name="renewal_due_two" string="Renewal More of 30 Days"
+                            domain="[('renewal_due','=','renewal_thirty')]"/>
+                    <filter name="renewal_due_three" string="Renewal Less of 30 Days"
+                            domain="[('renewal_due','=','renewal_thirty_ex')]"/>
+                    <filter name="lapsed_sta" string="Status Lapsed"
+                            domain="[('status','=','lapsed')]"/>
+                    <filter name="active_sta" string="Status Active"
+                            domain="[('status','=','active')]"/>
+                    <sparator/>
+                    <!--<separator/>-->
+                    <!--<field name="partner_id" operator="child_of"/>-->
+                    <!--<field name="user_id" string="Salesperson"/>-->
+                    <!--<field name="period_id" string="Period"/>-->
+                    <field name="policy_number" string="Policy Number"/>
+                    <!--<separator/>-->
+                    <!--<filter domain="[('user_id','=',uid)]" help="My Invoices"/>-->
+                    <group expand="0" string="Group By">
+                    	<filter name="customers_group" string="Customer" context="{'group_by':'customer_related'}"/>
+                    	<filter name="suppliers_group" string="Supplier" context="{'group_by':'suppliers_on_policy'}"/>
+                    	<filter name="payment_group" string="Payment" context="{'group_by':'premium_paid'}"/>
+                    	<filter name="insurance_group" string="Insurance Type" context="{'group_by':'type_of_insurance'}"/>
+                        <!--<filter string="Salesperson" context="{'group_by':'user_id'}"/>-->
+                        <!--<filter string="Status" context="{'group_by':'state'}"/>-->
+                        <!--<separator/>-->
+                        <!--<filter string="Period" context="{'group_by':'period_id'}"/>-->
+                        <!--<filter string="Due Month" context="{'group_by':'date_due'}"/>-->
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <record id="open_view_customer_product" model="ir.actions.act_window">
+            <field name="name">Summary Information</field>
+            <field name="res_model">customer.product.status</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="view_customer_product_filter"/>
+        </record>
+
+        <menuitem id="menu_customer_product" action="open_view_customer_product" parent="base.menu_sales" sequence="100"/>
+
+        <record id="insrate_supplier_addons" model="ir.ui.view">
+            <field name="name">res.partner.supplier.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='property_account_position']" position="after">
+                    <field name="cus_acc_type" widget="selection"/>
+                </xpath>
+                <xpath expr="//page[@string='Sales &amp; Purchases']" position="after">
+                    <page string="Product Information" attrs="{'invisible': [('customer','!=',True)]}">
+                        <group>
+                            <!--<field name="suppliers_on_cus"-->
+                                   <!--attrs="{'invisible': [('supplier', '!=', False)]}"-->
+                                   <!--widget="many2many_tags" string="Suppliers" options="{'no_create_edit':'1'}"/>-->
+                            <field name="sub_agents" domain="[('is_a_agent', '=', 1)]" context="{'default_is_a_agent': 1}"/>
+                            <field name="total_gross"/>
+                        </group>
+                        <field name="customer_status"  widget="one2many_list"
+                               context="{'default_customer_related': id}">
+                            <tree>
+                                <field name="date_created"/>
+                                <field name="status"/>
+                                <field name="customer_related" invisible="True"/>
+                                <field name="policy_number"/>
+                                <field name="suppliers_on_policy"/>
+                                <field name="policy_start"/>
+                                <field name="policy_end"/>
+                                <field name="renewal_due"/>
+                                <field name="type_of_insurance"/>
+                                <field name="premium_paid"/>
+                                <field name="commission_pcnt"/>
+                                <field name="gross_commission"/>
+                                <field name="current_payment"/>
+                                <field name="ins_remarks"/>
+                            </tree>
+                        </field>
+                        <field name="product_remarks"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem id="menu_account_sales_supplier" name="Suppliers"
+            parent="base.menu_sales"
+            action="base.action_partner_supplier_form" sequence="2"/>
+
+        <record id="account_invoice_modification_form" model="ir.ui.view">
+             <field name="name">account.invoice.form.modification</field>
+             <field name="model">account.invoice</field>
+             <field name="inherit_id" ref="account.invoice_form"/>
+             <field name="arch" type="xml">
+                    <xpath expr="//field[@name='fiscal_position']" position="after">
+                        <field name="invoice_for" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="policy_class" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="policy_no" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <label for="ins_date_from" string="Period of Insurance" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <div>
+                            <field name="ins_date_from" class="oe_inline" attrs="{'readonly': [('state', '!=', 'draft')]}"/> -
+                            <field name="ins_date_to" class="oe_inline" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </div>
+                        <field name="insured_person" attrs="{'invisible': [('policy_class', '!=', 'travelon')], 'readonly': [('state', '!=', 'draft')]}">
+                            <tree editable="bottom">
+                                <field name="insured_person_name"/>
+                            </tree>
+                        </field>
+                        <field name="area" attrs="{'invisible': [('policy_class', '!=', 'travelon')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="plan_covered" attrs="{'invisible': [('policy_class', '!=', 'travelon')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="benefit_travelon" attrs="{'invisible': [('policy_class', '!=', 'travelon')], 'readonly': [('state', '!=', 'draft')]}"/>
+
+                        <field name="interest_fwmp" attrs="{'invisible': [('policy_class', '!=', 'fwmp')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="plan_type" attrs="{'invisible': [('policy_class', '!=', 'fwmp')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="benefit_fwmp" attrs="{'invisible': [('policy_class', '!=', 'fwmp')], 'readonly': [('state', '!=', 'draft')]}"/>
+
+                        <field name="interest_mh"  attrs="{'invisible': [('policy_class', '!=', 'marine_hull')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="vessel_des" attrs="{'invisible': [('policy_class', '!=', 'marine_hull')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="vessel_no" attrs="{'invisible': [('policy_class', '!=', 'marine_hull')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="vessel_name" attrs="{'invisible': [('policy_class', '!=', 'marine_hull')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="cover_type" attrs="{'invisible': [('policy_class', '!=', 'marine_hull')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="limit_of_liab" attrs="{'invisible': [('policy_class', '!=', 'marine_hull')], 'readonly': [('state', '!=', 'draft')]}"/>
+
+                        <field name="sit_at_risk" attrs="{'invisible': [('policy_class', '!=', 'home_plus')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="interest_hpc" attrs="{'invisible': [('policy_class', '!=', 'home_plus')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="sum_insured" attrs="{'invisible': [('policy_class', '!=', 'home_plus')], 'readonly': [('state', '!=', 'draft')]}"/>
+
+                        <field name="policy_description" placeholder="Description of the policy class..."
+                               attrs="{'invisible': ['|','|','|', ('policy_class', '=', 'home_plus'), ('policy_class', '=', 'marine_hull'), ('policy_class', '=', 'fwmp'), ('policy_class', '=', 'travelon')], 'readonly': [('state', '!=', 'draft')]}"/>
+                    </xpath>
+                    <xpath expr="//field[@name='account_id']" position="after">
+                        <field name="sub_agents" domain="[('is_a_agent', '=', 1)]" readonly="True"
+                               context="{'default_is_a_agent': 1}"/>
+                        <!--attrs="{'readonly': [('state', '!=', 'draft')]}"-->
+
+                        <field name="agent_commission" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    </xpath>
+             </field>
+        </record>
+
+        <record id="product_template_modification_form" model="ir.ui.view">
+             <field name="name">product.template.form.modification</field>
+             <field name="model">product.template</field>
+             <field name="inherit_id" ref="product.product_template_form_view"/>
+             <field name="arch" type="xml">
+                    <xpath expr="//field[@name='type']" position="after">
+                        <field name="type_of_insurance"/>
+                    </xpath>
+             </field>
+        </record>
+
+        <record id="hr_employee_modification_form" model="ir.ui.view">
+             <field name="name">hr.employee.form.modification</field>
+             <field name="model">hr.employee</field>
+             <field name="inherit_id" ref="hr.view_employee_form"/>
+             <field name="arch" type="xml">
+                    <xpath expr="//field[@name='user_id']" position="after">
+                        <field name="is_a_agent"/>
+                    </xpath>
+                    <xpath expr="//page[@string='HR Settings']" position="after">
+                        <page string="Commissions" attrs="{'invisible': [('is_a_agent', '=', False)]}">
+                            <group>
+                                <group string="Gross Commission">
+                                    <field name="total_gross"/>
+                                    <field name="gross_paid"/>
+                                    <field name="gross_unpaid"/>
+                                </group>
+                                <group string="Payment Input">
+                                    <field name="percent_gunpaid" attrs="{'readonly': [('generate_clicked','=',True)]}"/>
+                                    <field name="pmt_amount" attrs="{'readonly': [('generate_clicked','=',True)]}"/>
+                                    <button name="button_compute_commission" string="Generate" class="oe_edit_only"
+                                                        type="object" help="Compute latest payable commission"
+                                                        attrs="{'invisible': [('generate_clicked','=',True)]}"/><br/>
+                                </group>
+
+                                <group string="Agent's Commission">
+                                    <field name="pay_amount"/>
+                                    <field name="payment_date"/>
+                                    <field name="paid_to_agent"/>
+                                </group>
+                                <group>
+                                    <div>
+                                        <field name="generate_clicked" invisible="True"/>
+                                        <field name="calculation_summary"/>
+                                        <button name="button_confirm_commission" string="Confirm" class="oe_edit_only"
+                                                        type="object" help="Confirm latest payable commission"
+                                                        attrs="{'invisible': [('generate_clicked','=',False)]}"/>
+                                        <button name="button_clear" string="Clear" class="oe_edit_only"
+                                                        type="object" help="Clear currently generated calculations"
+                                                        attrs="{'invisible': [('generate_clicked','=',False)]}"/>
+                                    </div>
+                                </group>
+                            </group>
+                            <group string="Commission Earned Info.">
+                                <div>
+                                    <field name="agent_commission_line" context="{'default_agent_rel': id}">
+                                        <tree editable="bottom">
+                                            <field name="agent_rel" domain="[(is_a_agent','=','True')]"/>
+                                            <field name="customer_agent_rel" domain="[('customer','=','True')]"/>
+                                            <field name="date_invoice"/>
+                                            <field name="sales_amount"/>
+                                            <field name="commission_percent"/>
+                                            <field name="commission_earned"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </group>
+                        </page>
+                    </xpath>
+             </field>
+        </record>
+
+        <record id="action_subagent_form" model="ir.actions.act_window">
+            <field name="name">Subagents</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{"search_default_is_a_agent": 1, 'default_is_a_agent': 1}</field>
+            <field name="domain">[('is_a_agent', '=', 1)]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new sub-agent.
+              </p><p>
+                With just a quick glance on the Odoo subagent screen, you
+                can easily find all the information you need for each subagent;
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_subagent_form"
+                  parent="base.menu_sales"
+                  action="action_subagent_form"
+                  sequence="2"/>
+
+    </data>
+</openerp>
