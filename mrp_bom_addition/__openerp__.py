@@ -6,6 +6,7 @@
     'name': 'BOM Weight Percentage Addition',
     'version': '8.0.1.0',
     'author': 'Tanzil Khan',
+    'website': 'https://www.tanzilkhan.com',
     'category': 'Manufacturing',
     'sequence': 1,
     'summary': 'Percentage Calculation for BoM Components',

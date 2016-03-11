@@ -6,10 +6,11 @@
 	'name' : 'Employee Loan Management',
 	'version' : '8.0.1.0',
 	'author' : 'Asma Aly and modified by Tanzil Khan',
+	'website': 'https://www.tanzilkhan.com',
 	'category' : 'Human Resources',
 	'description' : """
 		This module was developed by Asmaa Aly and I modified it in some extent.
-		
+
 		It allows to manage loans for employee. With this module employee can request loans and pay them
 		via payroll system. It also has loan schedule integrated if the interest is inputted.
 	""",
