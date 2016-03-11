@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report
+            id="custom_report_of_export"
+            model="export.register"
+            string="Commercial Invoice"
+            report_type="qweb-pdf"
+            name="esq_export_register.report_export_commercial_invoice_document"
+            file="esq_export_register.report_export_commercial_invoice_document"
+        />
+
+        <report
+            id="custom_report_of_delivery_challlan"
+            model="export.register"
+            string="Delivery Challlan"
+            report_type="qweb-pdf"
+            name="esq_export_register.report_export_delivery_challan_document"
+            file="esq_export_register.report_export_delivery_challan_document"
+        />
+
+        <report
+            id="custom_report_of_export_packing_list"
+            model="export.register"
+            string="Packing List"
+            report_type="qweb-pdf"
+            name="esq_export_register.report_export_packing_list_document"
+            file="esq_export_register.report_export_packing_list_document"
+        />
+
+        <report
+            id="custom_report_export_truck_receipt"
+            model="export.register"
+            string="Truck Receipt"
+            report_type="qweb-pdf"
+            name="esq_export_register.report_export_truck_receipt_document"
+            file="esq_export_register.report_export_truck_receipt_document"
+        />
+
+        <report
+            id="custom_certificate_of_origin"
+            model="export.register"
+            string="Origin Certificate "
+            report_type="qweb-pdf"
+            name="esq_export_register.certificate_of_origin_document"
+            file="esq_export_register.certificate_of_origin_document"
+        />
+
+        <report
+            id="custom_certificate_of_beneficiary"
+            model="export.register"
+            string="Beneficiary Certificate "
+            report_type="qweb-pdf"
+            name="esq_export_register.certificate_of_beneficiary_document"
+            file="esq_export_register.certificate_of_beneficiary_document"
+        />
+        <report
+            id="custom_certificate_of_applicant"
+            model="export.register"
+            string="Applicant Certificate "
+            report_type="qweb-pdf"
+            name="esq_export_register.certificate_of_applicant_document"
+            file="esq_export_register.certificate_of_applicant_document"
+        />
+        <report
+            id="custom_certificate_of_pre_shipment_inspection"
+            model="export.register"
+            string="Pre Shipment Inspection Certificate"
+            report_type="qweb-pdf"
+            name="esq_export_register.certificate_of_pre_shipment_inspection_document"
+            file="esq_export_register.certificate_of_pre_shipment_inspection_document"
+        />
+        <report
+            id="custom_certificate_of_pre_delivery_inspection"
+            model="export.register"
+            string="Pre Delivery Inspection Certificate"
+            report_type="qweb-pdf"
+            name="esq_export_register.certificate_of_pre_delivery_inspection_document"
+            file="esq_export_register.certificate_of_pre_delivery_inspection_document"
+        />
+        <report
+            id="custom_certificate_of_inspection"
+            model="export.register"
+            string="Inspection Certificate"
+            report_type="qweb-pdf"
+            name="esq_export_register.certificate_of_inspection_document"
+            file="esq_export_register.certificate_of_inspection_document"
+        />
+        <report
+            id="custom_certificate_of_lc"
+            model="export.register"
+            string="Certificate"
+            report_type="qweb-pdf"
+            name="esq_export_register.certificate_of_lc_document"
+            file="esq_export_register.certificate_of_lc_document"
+        />
+        <report
+            id="custom_weight_measurement"
+            model="export.register"
+            string="Weight and Measurement"
+            report_type="qweb-pdf"
+            name="esq_export_register.weight_measurement_document"
+            file="esq_export_register.weight_measurement_document"
+        />
+        <report
+            id="custom_report_of_sales_contract"
+            model="export.register"
+            string="Sales Contract"
+            report_type="qweb-pdf"
+            name="esq_export_register.report_of_sales_contract_document"
+            file="esq_export_register.report_of_sales_contract_document"
+        />
+
+        <record id="export_register_form" model="ir.ui.view">
+            <field name="name">export.register.form</field>
+            <field name="model">export.register</field>
+            <field name="arch" type="xml">
+                <form string="Import Register">
+                    <gourp>
+                        <group>
+                            <field name="up_to_date"/>
+                        </group>
+                    </gourp>
+                    <field name="register_lines" widget="one2many_list">
+                        <tree editable="bottom">
+                            <field name="sl_no"/>
+                            <field name="date"/>
+                            <field name="comm_invoice_no"/>
+                            <field name="customer"/>
+                            <field name="pi_no" on_change="onchange_pi_no(pi_no)"/>
+                            <field name="pi_date"/>
+                            <field name="buyer_name"/>
+                            <field name="product_ref"/>
+                            <field name="sales_rate"/>
+                            <field name="sales_value"/>
+                            <field name="pi_description"/>
+                            <field name="pi_quant"/>
+                            <field name="trans_cost"/>
+                            <field name="delv_quant"/>
+                            <field name="balance"/>
+                            <field name="lst_del_date"/>
+                            <field name="exp_lc_no"/>
+                            <field name="exp_lc_date"/>
+                            <field name="issue_bnk"/>
+                            <field name="d_sub_party"/>
+                            <field name="ac_rec_party"/>
+                            <field name="pi_values"/>
+                            <field name="nego_bnk"/>
+                            <field name="lc_tenor"/>
+                            <field name="ship_dt"/>
+                            <field name="exp_dt"/>
+                            <field name="amend_dt"/>
+                            <field name="ud_no"/>
+                            <field name="ud_rcv_dt"/>
+                            <field name="status"/>
+                            <field name="swift_rcv_dt"/>
+                            <field name="lc_transfer_dt"/>
+                            <field name="lc_cp_rcv_dt"/>
+                            <field name="delivery_status"/>
+                            <field name="bl_days"/>
+                            <field name="doc_sub_rcv_status"/>
+                            <field name="exp_no"/>
+                            <field name="discrepancy_charge"/>
+                            <field name="duration_adv"/>
+                            <field name="lc_rcv_durat"/>
+                            <field name="ldbc_no"/>
+                            <field name="bnk_subm_pend"/>
+                            <field name="coll_pending"/>
+                            <field name="act_recv_dt"/>
+                            <field name="mst_lc_no"/>
+                            <field name="mst_lc_dt"/>
+                            <field name="sale_contract_no"/>
+                            <field name="sale_contract_dt"/>
+                            <field name="lc_appl_bin"/>
+                            <field name="bnk_bin"/>
+                            <field name="tin_no"/>
+                            <field name="irc_no"/>
+                            <field name="erc_no"/>
+                            <field name="bond_lcns_no"/>
+                            <field name="vat_reg_no"/>
+                            <field name="hs_code"/>
+                            <field name="area_code"/>
+                            <field name="ad_ref_code"/>
+                            <field name="bb_circular_no"/>
+                            <field name="exp_perm_no"/>
+                            <field name="exp_perm_dt"/>
+                            <field name="others"/>
+                            <field name="remarks"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <field name="total_lc_qty"/>
+                        <field name="total_lc_bl_qty"/>
+                        <field name="all_lst_delivery"/>
+                        <field name="lc_value"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="export_register_tree">
+            <field name="name">export.register.tree</field>
+            <field name="model">export.register</field>
+            <field name="arch" type="xml">
+                <tree string="Import Register">
+                    <field name="up_to_date"/>
+                    <field name="total_lc_qty"/>
+                    <field name="total_lc_bl_qty"/>
+                    <field name="all_lst_delivery"/>
+                    <field name="lc_value"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_export_register" model="ir.actions.act_window">
+            <field name="name">Export Register</field>
+            <field name="res_model">export.register</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_export_main" parent="esq_import_plan.menu_import_root" name="Export" sequence="5"/>
+        <menuitem id="menu_export_register_main" action="open_view_export_register" parent="menu_export_main" name="Export" sequence="0"/>
+
+
+    </data>
+</openerp>

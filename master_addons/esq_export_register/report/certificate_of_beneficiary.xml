@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Custom report.-->
+<openerp>
+<data>
+
+    <template id="certificate_of_beneficiary_document">
+     <t t-call="report.html_container">
+         <t t-foreach="docs" t-as="o">
+
+                 <div class="page">
+
+                     <div class="row">
+                         <h3 class="col-xs-offset-3">BENEFICIARY CERTIFICATE</h3>
+                         <hr/>
+                     </div>
+                     <div class="row">
+                         <h6 class="col-xs-offset-8">Date :<span t-field="o.up_to_date"/></h6>
+                         <table class="col-xs-offset-2">
+                             <tr class="row">
+                                 <td class="col-xs-5">BUYER NAME </td>
+                                 <td class="col-xs-7"><span t-field="o.register_lines.buyer_name"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5">BUYER BANK</td>
+                                 <td class="col-xs-7"><span t-field="o.register_lines.issue_bnk"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5">BTB L/C No and Date</td>
+                                 <td class="col-xs-7"><span t-field="o.register_lines.exp_lc_no"/><span t-field="o.register_lines.exp_lc_date"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5">COMMERCIAL INVOICE NO</td>
+                                 <td class="col-xs-7"><span t-field="o.register_lines.comm_invoice_no"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5">QUANTITY</td>
+                                 <td class="col-xs-7"><span t-field="o.register_lines.delv_quant"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5">VALUE</td>
+                                 <td class="col-xs-7"><span t-field="o.register_lines.pi_values"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5">PROFORMA INVOICE NO</td>
+                                 <td class="col-xs-7"><span t-field="o.register_lines.pi_no"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5">CONTRACT NO</td>
+                                 <td class="col-xs-7"><span t-field="o.register_lines.sale_contract_no"/></td>
+                             </tr>
+                         </table>
+                     </div>
+                     <br/>
+                     <br/>
+                     <div class="row">
+                             WE HEREBY CERTIFY THAT AVOBE MENTIONED GOODS ARE BANGLADESH ORIGINE. WE RECEVIED THE GOODS IN GOOD CONDITION AS PER ABOVE MENTIONED L/C AND PROFORMA INVOICE.
+                     </div>
+                     <br/>
+                     <div class="row">
+                        <h6 class="col-xs-offset-7">FOR ESQUIRE ACCESSORIES LIMITED</h6>
+                            <br/>
+                            <br/>
+                        <h5 class="col-xs-offset-7">AUTHORIZED SIGNATURE</h5>
+                   </div>
+
+                 </div>
+
+         </t>
+     </t>
+    </template>
+
+</data>
+</openerp>

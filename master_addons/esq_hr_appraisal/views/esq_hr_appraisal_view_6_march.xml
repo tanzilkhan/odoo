@@ -1,0 +1,448 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_hr_appraisal_form_form">
+            <field name="name">hr_appraisal_form.form</field>
+            <field name="model">hr.appraisal.form</field>
+            <field name="arch" type="xml">
+                <form string="Appraisal" version="7.0">
+                    <div class="oe_title">
+                                <label for="name" class="oe_edit_only"/>
+                                <h1>
+                                    <field name="name"/>
+                                </h1>
+                    </div>
+                    <group colspan="2">
+                        <group>
+                            <field name="type"/>
+                            <field name="purpose" invisible="1"/>
+                            <field name="appraisal_for" attrs="{'required': True}"/>
+                            <field name="selected_department" attrs="{'invisible':[('appraisal_for','!=','department')],
+                                'required':[('appraisal_for','=','department')]}" widget="selection"/>
+                            <field name="deadline" attrs="{'required': True}"/>
+                            <field name="reason" attrs="{'required': True}"/>
+                        </group>
+                        <group>
+                            <!--<field name="month_first"/>
+                            <field name="month_next"/>-->
+                            <field name="next_appraisal"/>
+                            <field name="month_next" attrs="{'invisible':[('next_appraisal','!=','periodic')]}"/>
+                            <field name="month_next_date" attrs="{'invisible':[('next_appraisal','!=','specific')]}"/>
+                            <field name="due_date_appraisal"/>
+                        </group>
+                    </group>
+                    <group>
+                            <field name="selected_employees" attrs="{'invisible':[('appraisal_for','!=','employee')],
+                                'required':[('appraisal_for','=','employee')]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Additional Details">
+                            <field name="additional_details">
+                                <tree string="Test" version="7.0" editable="top">
+                                    <field name="criteria"/>
+                                    <field name="standard"/>
+                                    <field name="weight"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+
+
+                    <field name="appraisal_description" placeholder="Appraisal Description..."/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_appraisal_form_tree">
+            <field name="name">hr_appraisal_form.tree</field>
+            <field name="model">hr.appraisal.form</field>
+            <field name="arch" type="xml">
+                <tree string="Appraisal Form" version="7.0">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="purpose"/>
+                    <field name="appraisal_description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_hr_appraisal_form" model="ir.actions.act_window">
+            <field name="name">Appraisal Form</field>
+            <field name="res_model">hr.appraisal.form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Appraisal" parent="hr.menu_hr_root" id="menu_eval_hr" sequence="25"/>
+        <menuitem name="Appraisal Form" parent="menu_eval_hr" id="menu_action_view_hr_appraisal_form"
+            action="action_view_hr_appraisal_form"/>
+
+        <!--Appraisal Plan-->
+
+        <record model="ir.ui.view" id="view_hr_appraisal_plan_form">
+            <field name="name">hr.appraisal.plan.form</field>
+            <field name="model">hr.appraisal.plan</field>
+            <field name="arch" type="xml">
+                <form string="Appraisal" version="7.0">
+                    <group col="4">
+                        <group>
+                            <field name="name"/>
+                            <field name="active"/>
+                            <field name="action"/>
+                            <field name="appraisal_form_ids"/>
+                        </group>
+                        <group>
+                            <field name="month_first"/>
+                            <field name="month_next"/>
+                        </group>
+                    </group>
+
+                    <!--<notebook>
+                        <page string="Appraisal Forms">
+                            <field name="appraisal_form_ids" widget="one2many_list">
+                                <tree string="Appraisal Forms" version="7.0" editable="top">
+                                    <field name="appraisal_form"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>-->
+
+
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_appraisal_plan_tree">
+            <field name="name">hr.appraisal.plan.tree</field>
+            <field name="model">hr.appraisal.plan</field>
+            <field name="arch" type="xml">
+                <tree string="Appraisal Plan">
+                    <field name="name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_hr_appraisal_plan" model="ir.actions.act_window">
+            <field name="name">Appraisal Plan</field>
+            <field name="res_model">hr.appraisal.plan</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--<menuitem name="Appraisal Plan" parent="hr_evaluation.menu_eval_hr" id="menu_action_view_hr_appraisal_plan"
+            action="action_view_hr_appraisal_plan" groups="base.group_hr_executive"/>-->
+        <!-- Appraisal Plan ends-->
+
+        <!-- Appraisal view starts from here -->
+
+        <record model="ir.ui.view" id="view_hr_appraisal_tree">
+            <field name="name">hr.appraisal.tree</field>
+            <field name="model">hr.appraisal</field>
+            <field name="arch" type="xml">
+                <tree string="Appraisal" create="0">
+                    <field name="employee_id"/>
+                    <field name="appraisal_plan"/>
+                    <field name="initiation_date"/>
+                    <field name="deadline"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_appraisal_form">
+            <field name="name">hr.appraisal.form</field>
+            <field name="model">hr.appraisal</field>
+            <field name="arch" type="xml">
+                <form string="Appraisal" version="7.0">
+                    <header>
+                        <button name="appraisal_start" string="Start Appraisal" states="draft" type="object" class="oe_highlight"/>
+                        <button name="answer_appraisal" string="Start Appraisal" states="pre_appraisal" type="object" class="oe_highlight" />
+                        <button name="reset_to_draft" string="Reset to Draft" states="cancel" type="object" />
+
+                        <button name="pre_appraisal_2_done" string="Done" states="pre_appraisal_2" type="object" class="oe_highlight" />
+                        <button name="pre_appraisal_3_done" string="Done" states="pre_appraisal_3" type="object" class="oe_highlight" />
+                        <button name="feedback_done" string="Done" states="feedback" type="object" class="oe_highlight" />
+                        <button name="appraisal_done" string="Done" states="appraisal" type="object" class="oe_highlight" />
+                        <button name="post_appraisal_done" string="Done" states="post_appraisal" type="object" class="oe_highlight" />
+                        <button name="hod_comment_done" string="Done" states="hod_comment" type="object" class="oe_highlight" />
+                        <button name="hr_comment_done" string="Done" states="hr_comment" type="object" class="oe_highlight" />
+
+                        <button name="appraisal_cancel" string="Cancel Appraisal" states="pre_appraisal,pre_appraisal_2,pre_appraisal_3,feedback,appraisal,post_appraisal,hod_comment,hr_comment" type="object"
+                                />
+
+
+                        <field name="state" widget="statusbar" statusbar_visible="pre_appraisal,feedback,appraisal,post_appraisal,hod_comment,hr_comment,done"
+                               statusbar_colors='{"draft":"blue", "pre_appraisal":"blue", "feedback":"blue", "appraisal":"blue",
+                               "post_appraisal":"blue","post_appraisal_2":"blue","post_appraisal_3":"blue","hod_comment":"blue","hr_comment":"blue","done":"blue","cancel":"red"}'/><!-- clickable="False" -->
+                    </header>
+
+                    <group colspan="2">
+                        <group>
+                            <field name="employee_pin"  attrs="{'invisible':[('state','not in',('draft','cancel'))],'readonly':[('state','not in','draft')]}" on_change="on_change_pin(employee_pin)"
+                                    />
+
+                            <field name="employee_name" attrs="{'invisible':True}"/>
+
+                            <field name="employee_id" on_change="on_change_name(employee_id)"
+                                   attrs="{'invisible':[('state','not in',('draft','pre_appraisal','pre_appraisal_2','hod_comment','hr_comment','done','cancel'))],
+                                   'readonly':[('state','not in',('draft'))]}" options='{"no_open": true}' />
+
+                            <field name="dept_id" attrs="{'invisible':[('state','not in',('draft','hod_comment','hr_comment','done','cancel'))]}" />
+
+                            <field name="appraisal_plan" attrs="{'invisible':[('state','not in',('draft','pre_appraisal','pre_appraisal_2','hod_comment','hr_comment','cancel'))],
+                                   'readonly':[('state','not in',('draft'))]}" options='{"no_open": true}' />
+
+                            <field name="reason" attrs="{'invisible':[('state','not in',('done','draft','pre_appraisal','pre_appraisal_2','hod_comment','hr_comment','cancel'))],
+                                   'readonly':[('state','not in',('draft'))]}" options='{"no_open": true}' />
+
+                            <field name="due_date_appraisal" attrs="{'invisible':[('state','not in',('draft','pre_appraisal','cancel'))],
+                                   'readonly':[('state','not in',('draft'))]}" />
+
+                            <field name="responsible_person" attrs="{'invisible':[('state','not in',('done','draft'))],'readonly':[('state','not in',('draft'))]}" />
+
+                            <field name="deadline" attrs="{'invisible':[('state','not in',('done','draft','pre_appraisal','pre_appraisal_2','hod_comment','hr_comment'))],
+                                   'readonly':[('state','not in',('draft'))]}" />
+
+                            <field name="initiation_date" attrs="{'invisible':[('state','=','draft')]}"/>
+
+                        </group>
+                        <group></group>
+
+                    </group>
+                    <h4 attrs="{'invisible':[('state','not in',('draft','pre_appraisal'))]}">Instructions</h4>
+                            <field name="instruction" placeholder="Instructions" attrs="{'invisible':[('state','not in',('draft','pre_appraisal'))],'readonly':[('state','not in',('draft'))]}" />
+
+                        <!--<button name="waiting_answer" string="Waiting Answer" states="pre_appraisal_2" type="object" groups="base.group_hr_incharge"/>-->
+
+                        <!--<button name="review_answer" string="Review Answer" states="hod_comment" type="object" groups="base.group_hr_hod"/>-->
+                        <group col="2">
+                            <group>
+                                <field name="appraisal_datetime" attrs="{'invisible':[('state','not in',('pre_appraisal','feedback'))],
+                                       'readonly':[('state','in',('feedback'))],'required':[('state','in',('pre_appraisal'))]}"/>
+
+                                <field name="appraisal_venue" attrs="{'invisible':[('state','not in',('pre_appraisal','feedback'))],
+                                       'readonly':[('state','in',('feedback'))],'required':[('state','in',('pre_appraisal'))]}"/>
+                            </group>
+                            <group></group>
+                        </group>
+
+                        <group string="Checklist: Have you done the followings-" attrs="{'invisible':[('state','not in',('pre_appraisal'))]}">
+                            <field name="description_appraisal" />
+                            <field name="remainder_criterion" />
+                            <field name="performance_feedback" />
+                        </group>
+
+                        <h4 attrs="{'invisible':[('state','not in',('pre_appraisal_2'))]}">Internal Notes</h4>
+
+                        <h4 attrs="{'invisible':[('state','not in',('pre_appraisal'))]}">Comments</h4>
+                        <field name="comments" attrs="{'invisible':[('state','not in',('pre_appraisal'))]}" />
+
+
+                        <group attrs="{'invisible':[('state','not in',('feedback','appraisal'))]}" col="1">
+                            <h4>List of Period Accomplishment</h4>
+                            <field name="period_accomplishments" groups="" attrs="{'required':[('state','in',('feedback'))],'readonly':[('state','not in',('feedback'))]}"/>
+                            <h4>Areas of Improvement</h4>
+                            <field name="improvements" groups="" attrs="{'required':[('state','in',('feedback'))],'readonly':[('state','not in',('feedback'))]}"/>
+                            <h4>List of Extra Ordinary Activities</h4>
+                            <field name="extra_ordinary_activities" groups="" attrs="{'required':[('state','in',('feedback'))],'readonly':[('state','not in',('feedback'))]}"/>
+                            <h4>What else I could do?</h4>
+                            <field name="could_be_done" groups="" attrs="{'required':[('state','in',('feedback'))],'readonly':[('state','not in',('feedback'))]}"/>
+                            <h4>Training Needed</h4>
+                            <field name="trainings_needed" groups="" attrs="{'required':[('state','in',('feedback'))],'readonly':[('state','not in',('feedback'))]}"/>
+                            <h4>What are the problems I faced?</h4>
+                            <field name="problems_faced" groups="" attrs="{'required':[('state','in',('feedback'))],'readonly':[('state','not in',('feedback'))]}"/>
+                        </group>
+
+                        <h4 attrs="{'invisible': [('state','not in',('appraisal','hod_comment','hr_comment'))]}">Critical Performance Indicator</h4>
+                        <!--, 'readonly':[('state','not in',('appraisal'))]      editable="top"-->
+                        <field name="appraisal_questions"  attrs="{'invisible': [('state','not in',('appraisal','hod_comment','hr_comment'))], 'readonly':[('state','not in',('appraisal','hod_comment'))]}" widget="one2many_list" >
+                            <tree version="7.0" editable="top">
+                                <field name="criteria" attrs="{'readonly':True}"/>
+                                <field name="standard" attrs="{'readonly':True}"/>
+                                <field name="weight" sum="Total Weight" attrs="{'readonly':True}"/>
+                                <field name="marks" on_change="ques_marks_change(weight, marks)"/>
+                                <field name="total_marks" sum="Total"/>
+                                <field name="remarks"/>
+                            </tree>
+                        </field>
+                        <!--<h4 attrs="{'invisible': [('state','not in',('appraisal','hod_comment','hr_comment'))]}">Key Performance Indicator</h4>-->
+                        <!--<field name="kpi_questions"  attrs="{'invisible': [('state','not in',('appraisal','hod_comment','hr_comment'))], 'readonly':[('state','not in',('appraisal','hod_comment'))]}" widget="one2many_list" >-->
+                            <!--<tree version="7.0" editable="top">-->
+                                <!--<field name="criteria" attrs="{'readonly':True}"/>-->
+                                <!--<field name="standard" attrs="{'readonly':True}"/>-->
+                                <!--<field name="weight" sum="Total Weight" attrs="{'readonly':True}"/>-->
+                                <!--<field name="marks" on_change="kpi_marks_change(weight, marks)"/>-->
+                                <!--<field name="total_marks" sum="Total"/>-->
+                                <!--<field name="remarks"/>-->
+                            <!--</tree>-->
+                        <!--</field>-->
+
+                        <!--<h4 attrs="{'invisible': [('state','not in',('appraisal','hod_comment','hr_comment'))]}">Critical Success Factors</h4>-->
+                        <!--<field name="negative_questions"  attrs="{'invisible': [('state','not in',('appraisal','hod_comment','hr_comment'))], 'readonly':[('state','not in',('appraisal','hod_comment'))]}" widget="one2many_list" >-->
+                            <!--<tree version="7.0" editable="top">-->
+                                <!--<field name="criteria" attrs="{'readonly':True}"/>-->
+                                <!--<field name="answer" on_change="answer_on_change(answer)"/>-->
+                                <!--<field name="marks" sum="Total"/>-->
+                                <!--<field name="remarks"/>-->
+                            <!--</tree>-->
+                        <!--</field>-->
+                        <group>
+                            <field name="total_marks_scored" attrs="{'invisible':[('state','not in',('done','appraisal','post_appraisal','hod_comment','hr_comment'))],'readonly':[('state','not in',())]}" />
+                        </group>
+
+                        <group col="1" attrs="{'invisible':[('state','not in',('post_appraisal'))]}">
+                            <group>
+                                <!--<h4>Did you set SMART goal for next tenure? Please specify:</h4>-->
+
+                                    <field name="appraisal_goal" widget="one2many_list" attrs="{'invisible':[('state','not in',('post_appraisal'))]}">
+                                    <tree string="Did you set SMART goal for next tenure? Please specify:" version="7.0" editable="top">
+                                        <field name="criteria"/>
+                                        <field name="weight" sum="Total"/>
+                                        <field name="standard"/>
+                                    </tree>
+                                    </field>
+
+                            </group>
+
+                            <group col="2">
+                                <group>
+                                    <field name="next_appraisal" attrs="{'invisible':[('state','not in',('done','post_appraisal'))]}" />
+                                </group>
+                                <group></group>
+                            </group>
+                            <h4>Did you make any action plan for him/her? Please specify:</h4>
+                            <field name="action_plan" placeholder="Action Plan..." attrs="{'invisible':[('state','not in',('post_appraisal'))]}" />
+                            <h4>Do you have any training need suggestion? Please specify:</h4>
+                            <!--field name="training_suggestion" placeholder="Training need suggestions..." attrs="{'invisible':[('state','not in',('post_appraisal'))]}" groups="base.group_hr_incharge"/-->
+                            <field name="training_suggestion" placeholder="Training need suggestions..." widget="many2many_tags" attrs="{'invisible':[('state','not in',('post_appraisal'))]}" />
+                        </group>
+
+                        <group col="2">
+                            <group>
+                                <field name="appreciation" attrs="{'invisible':[('state','not in',('hr_comment','done'))],
+                                    'readonly':[('state','not in','hr_comment')]}" />
+                            </group>
+                            <group></group>
+                        </group>
+
+                        <h4 attrs="{'invisible':[('state','not in',('post_appraisal','hod_comment','hr_comment','done'))]}">Supervisor Remarks</h4>
+                        <field name="supervisor_remarks" placeholder="Remarks" attrs="{'invisible':[('state','not in',('done','post_appraisal','hod_comment','hr_comment'))],'required':[('state','in',('post_appraisal'))],'readonly':[('state','not in',('post_appraisal'))]}"
+                                 />
+
+                        <h4 attrs="{'invisible':[('state','not in',('done','hod_comment','hr_comment'))]}">HoD Comments</h4>
+                        <field name="hod_comments" placeholder="" attrs="{'invisible':[('state','not in',('done','hod_comment','hr_comment'))],'required':[('state','in',('hod_comment'))],'readonly':[('state','not in',('hod_comment'))]}"
+                                 />
+
+                        <h4 attrs="{'invisible':[('state','not in',('done','hr_comment'))]}">HR Comments</h4>
+                        <field name="hr_comments" placeholder="" attrs="{'invisible':[('state','not in',('done','hr_comment'))],'required':[('state','in',('hr_comment'))],'readonly':[('state','not in',('hr_comment'))]}"
+                                 />
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_hr_appraisal" model="ir.actions.act_window">
+            <field name="name">Appraisal</field>
+            <field name="res_model">hr.appraisal</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_hr_appraisal_tree"/>
+        </record>
+
+        <menuitem name="Appraisal" parent="menu_eval_hr" id="menu_action_view_hr_appraisal"
+            action="action_view_hr_appraisal" sequence="40"/>
+
+        <record model="ir.ui.view" id="view_hr_appraisal_negative_questions">
+            <field name="name">hr.appraisal.negative.questions.tree</field>
+            <field name="model">hr.appraisal.negative.questions</field>
+            <field name="arch" type="xml">
+                <tree string="Appraisal Negative Questions" version="7.0">
+                    <field name="criteria"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_appraisal_negative_questions">
+            <field name="name">hr.appraisal.negative.questions.form</field>
+            <field name="model">hr.appraisal.negative.questions</field>
+            <field name="arch" type="xml">
+                <form string="Appraisal Negative Questions" version="7.0">
+                    <group>
+                        <field name="criteria"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_hr_appraisal_negative_questions" model="ir.actions.act_window">
+            <field name="name">Negative Questions</field>
+            <field name="res_model">hr.appraisal.negative.questions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Appraisal Negative Questions Setup" parent="hr.menu_hr_configuration" id="menu_action_view_hr_appraisal_negative_questions"
+            action="action_view_hr_appraisal_negative_questions" sequence="40" />
+
+        <!--CEO VIEW-->
+
+        <record model="ir.ui.view" id="view_hr_appraisal_ceo_view_tree">
+            <field name="name">hr.appraisal.ceo.view.tree</field>
+            <field name="model">hr.appraisal</field>
+            <field name="arch" type="xml">
+                <tree string="Appraisal CEO View">
+                    <field name="initiation_date"/>
+                    <field name="employee_id"/>
+                    <field name="dept_id"/>
+                    <field name="appraisal_answer_total"/>
+                    <field name="kpi_answer_total"/>
+                    <field name="negative_answer_total"/>
+                    <field name="total_marks_scored" string="Percentage of marks"/>
+                    <!--<field name="strength"/>
+                    <field name="weakness"/>
+                    <field name="areas_of_opportunities"/>
+                    <field name="tna"/>
+                    <field name="recommendations"/>
+                    <field name="state"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <!--<record model="ir.ui.view" id="view_hr_appraisal_ceo_view_form">-->
+            <!--<field name="name">hr.appraisal.ceo.view.form</field>-->
+            <!--<field name="model">hr.appraisal</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Appraisal CEO View" version="7.0">-->
+                    <!--<field name="employee_id"/>-->
+                    <!--<field name="dept_id"/>-->
+                    <!--<field name="strength"/>-->
+                    <!--<field name="weakness"/>-->
+                    <!--<field name="areas_of_opportunities"/>-->
+                    <!--<field name="tna"/>-->
+                    <!--<field name="recommendations"/>-->
+                    <!--<field name="state"/>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="action_view_hr_appraisal_ceo_view" model="ir.actions.act_window">-->
+            <!--<field name="name">Appraisal (CEO view)</field>-->
+            <!--<field name="res_model">hr.appraisal</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">tree</field>-->
+            <!--<field name="view_id" ref="view_hr_appraisal_ceo_view_tree"/>-->
+            <!--<field name="domain">[('state','=','done')]</field>-->
+        <!--</record>-->
+
+        <!--<menuitem name="Appraisal (CEO view)" parent="menu_eval_hr" id="menu_action_view_hr_appraisal_ceo_view"-->
+            <!--action="action_view_hr_appraisal_ceo_view" sequence="40"/>-->
+
+
+    </data>
+</openerp>

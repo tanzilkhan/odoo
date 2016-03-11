@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="module_name assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/esq_import_plan/static/src/css/esq_import_plan.css"/>
+            </xpath>
+        </template>
+        <record id="import_plan_form" model="ir.ui.view">
+            <field name="name">import.plan.form</field>
+            <field name="model">annual.import.plan</field>
+            <field name="arch" type="xml">
+                <form string="Import Plan">
+                    <header>
+                            <button string="Planned" name="planning" states="planning" type="object" class="oe_highlight"/>
+                            <field name="state" widget="statusbar" statusbar_colors='{"planning":"red","done":"blue"}' statusbar_visible="planning,done" readonly="1"/>
+
+                    </header>
+                    <sheet>
+                    <group>
+                        <field name="import_plan_date"/>
+                    </group>
+                    <div>
+                        <field name="import_plan" widget="one2many_list" context="{'default_state_change':state}">
+                            <tree string="Import Plan" editable="bottom" nolabel="1">
+                                <field name="product_name"/>
+                                <field name="product_unit"/>
+                                <field name="bp_quantity" />
+                                <field name="bp_value" attrs="{'readonly':[('state_change','!=','planning')]}"/>
+                                <field name="ac_quantity"/>
+                                <field name="ac_value"/>
+                                <field name="bl_quantity" />
+                                <field name="bl_value" />
+                                <field name="state_change" invisible="True"/>
+                            </tree>
+                        </field>
+                    </div>
+                        <p><i>** Balance = Planned Quantity or Value - Imported Quantity or Value</i></p>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_view_import_plan" model="ir.actions.act_window">
+            <field name="name">Import Plan</field>
+            <field name="res_model">annual.import.plan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_import_annual_plan" action="open_view_import_plan" parent="menu_import_main" name="Import Plan" sequence="1"/>
+
+        <record model="ir.actions.act_window" id="view_import_plan_tree">
+            <field name="name">Import Plans</field>
+            <field name="res_model">annual.import.plan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+            <field name="arch" type="xml">
+                <tree string="Payments">
+                    <field name="import_plan_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="procurement_state_add_form" model="ir.ui.view">
+             <field name="name">procurement.state.add.form</field>
+             <field name="model">procurement.order</field>
+             <field name="inherit_id" ref="procurement.procurement_form_view"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//button[@name='run']" position="replace">
+                     <button name="running_pro" states="confirmed" string="Run Procurement" class="oe_highlight" type="object"/>
+                 </xpath>
+                 <xpath expr="//button[@name='running_pro']" position="after">
+                     <button name="f_authorize" states="factory_auth" string="Authorize" class="oe_highlight" type="object"/>
+                     <button name="ho_authorize" states="ho_auth" string="Authorize" class="oe_highlight" type="object"/>
+                     <button name="procure" states="procurement,exception" string="Procure" class="oe_highlight" type="object"/>
+                     <button name="ho_sec_authorize" states="procurement" string="Import Plan Exceeds" class="oe_highlight" type="object" />
+                     <button name="authorize_exceed" states="ho_sec_auth" string="Approve Exceed Plan" class="oe_highlight" type="object"/>
+                     <!--<button name="excp_pur_order" states="exception" string="Create Purchase Order" class="oe_highlight" type="object"/>-->
+                 </xpath>
+                 <xpath expr="//button[@name='cancel']" position="replace">
+                     <button name="cancel" states="exception,confirmed,running,factory_auth,ho_auth,ho_sec_auth,procurement" string="Cancel Procurement" type="object"/>
+                 </xpath>
+                 <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" readonly="1" widget="statusbar" statusbar_visible="draft,confirmed,factory_auth,ho_auth,running,done" />
+                </xpath>
+                 <xpath expr="//label[@for='product_uos_qty']" position="before">
+                     <field name="purchase_type" widget="selection" attrs="{'invisible':[('state','not in',['procurement'])]}"/>
+                 </xpath>
+                 <xpath expr="//group[@name='scheduling']" position="after">
+                     <div>
+                        <h2 class="oe_horizontal_separator oe_clear proc_head">Procurement Status</h2>
+                        <field name="factory_gm"  class="state_remarks"/>
+                        <field name="senior_gm" class="state_remarks"/>
+                        <field name="approve_plan" class="state_remarks"/>
+                        <field name="plan_exceed" class="state_remarks"/>
+                        <field name="exceed_plan_appr" invisible="True"/>
+                        <field name="proc_start" class="proc_done"/>
+                        <field name="proc_order" class="proc_done"/>
+                    </div>
+                 </xpath>
+                 <xpath expr="//div[@name='button_box']" position="inside">
+                     <button class="oe_stat_button" type="action" name="%(view_import_plan_tree)d" icon="fa-usd" string="Import Plans" attrs="{'invisible':[('purchase_type','!=','order')]}">
+                     </button>
+                 </xpath>
+             </field>
+        </record>
+
+
+
+    </data>
+</openerp>

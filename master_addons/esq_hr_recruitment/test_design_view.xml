@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_test_design_form">
+        <field name="name">test.design.form</field>
+        <field name="model">test.design</field>
+        <field name="arch" type="xml">
+             <form string="test.design">
+                    <header>
+                        <!--<button name="job_draft" string="Send to Hr" states="head_dept" type="object" class="oe_highlight" />-->
+                        <!--<button name="job_recruitment_desk" string="Send to Head Of HR" type="object" class="oe_highlight" />-->
+                        <button name="job_head_hr_approve" string="Approve" states="head_hr" type="object" class="oe_highlight" />
+                        <button name="job_head_hr_reject" string="Reject" states="head_hr" type="object" class="oe_highlight"/>
+                        <!--<button name="job_head_hr" string="Cancel" states="cancel" type="object" class="oe_highlight" />-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,head_hr,approved"/>
+                    </header>
+                 <group colspan="2">
+                    <group>
+                        <field name="recruitment_no" attrs="{'readonly':[('state','in',('approved'))]}" on_change="onchange_recruitment_no(recruitment_no)"/>
+                        <field name="exam_type" attrs="{'readonly':[('state','in',('approved'))]}" widget="one2many_list">
+                            <tree editable="bottom">
+                                <field name="serial_no"/>
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="position" attrs="{'readonly':[('state','in',('approved'))]}"/>
+                    </group>
+
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_test_design_tree">
+        <field name="name">test.design.tree</field>
+        <field name="model">test.design</field>
+        <field name="arch" type="xml">
+            <tree string="Test Design">
+                <field name="recruitment_no"/>
+                <field name="position"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_test_design">
+        <field name="name">Test Design</field>
+        <field name="res_model">test.design</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Test Design" id="child_menu_test_design_item" parent="base.menu_crm_case_job_req_main" action="action_test_design"/>
+
+
+
+    <record model="ir.actions.act_window" id="action_test_design_exam">
+        <field name="name">Test Design Exam</field>
+        <field name="res_model">test.design.exam</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--<menuitem name="Test Design Exam" id="child_menu_test_design_exam_item" parent="menu_requisition_requisition_item" action="action_test_design_exam"/>-->
+
+    <record model="ir.actions.act_window" id="action_test_design_exam_type">
+        <field name="name">Test Design Exam Type</field>
+        <field name="res_model">test.design.exam.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Test Design Exam Type" id="child_menu_test_design_exam_type_item" parent="hr_recruitment.menu_hr_recruitment_recruitment" action="action_test_design_exam_type"/>
+
+
+</data>
+</openerp>

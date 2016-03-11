@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Custom report.-->
+<openerp>
+<data>
+
+    <template id="certificate_of_beneficiary_document">
+     <t t-call="report.html_container">
+         <t t-foreach="docs" t-as="o">
+
+                 <div class="page">
+                     <div class="row">
+                         <h3>Title</h3>
+                     </div>
+                     <div>
+                         <table>
+                             <tr class="row">
+                                 <td class="col-xs-3" style="border: 2px solid black">TO</td>
+
+                             </tr>
+                             <tr class="row">
+                                 <td style="border: 2px solid black">From</td>
+
+                             </tr>
+                             <tr class="row">
+                                 <td style="border: 2px solid black">TO</td>
+
+                             </tr>
+                             <tr class="row">
+                                 <td style="border-left: 2px solid black;border-top: 2px solid black;border-right: 2px solid black;">NOTIFY</td>
+
+                             </tr>
+                             <tr class="row">
+                                 <td style="border-left: 2px solid black;border-bottom: 2px solid black;border-right: 2px solid black;"></td>
+
+                             </tr>
+                             <tr class="row">
+                                 <td style="border: 2px solid black">BY</td>
+
+                             </tr>
+                         </table>
+
+
+                     </div>
+                 </div>
+
+         </t>
+     </t>
+    </template>
+
+</data>
+</openerp>

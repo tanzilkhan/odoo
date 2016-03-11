@@ -1,0 +1,18 @@
+.state_remarks{
+    font-style: italic;
+    color: green;
+    margin-left:15px;
+    font-weight:bolder;
+}
+
+.proc_head{
+    margin-left:15px;
+}
+
+.proc_done{
+    font-style:italic;
+    color:orangered;
+    margin-left:15px;
+    font-weight: bolder;
+    font-size: 15px;
+}

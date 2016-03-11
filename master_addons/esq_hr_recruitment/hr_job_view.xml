@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="viewww_hr_job_inherit">
+        <field name="name">hr.job.recruitment.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//label[@for='survey_id']"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+            </xpath>
+
+            <xpath expr="/form/header"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+            </xpath>
+
+            <xpath expr="//div[@groups='base.group_user']"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='survey_id']"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+            </xpath>
+
+            <!--<xpath expr="//label[@for='alias_name']"-->
+                       <!--position="attributes">-->
+                    <!--<attribute name="invisible">True</attribute>-->
+            <!--</xpath>-->
+
+
+            <!--<xpath expr="//field[@name='alias_domain']"-->
+                       <!--position="attributes">-->
+                    <!--<attribute name="invisible">True</attribute>-->
+            <!--</xpath>-->
+
+            <xpath expr="//field[@name='department_id']" position="after">
+                 <field name="question_set"/>
+                 <field name="job_responsibility"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</data>
+</openerp>

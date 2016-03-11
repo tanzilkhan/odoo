@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Custom report.-->
+<openerp>
+<data>
+<template id="report_export_commercial_invoice_document">
+     <t t-call="report.html_container">
+         <t t-foreach="docs" t-as="o">
+
+                 <div class="page">
+                     <div class="row">
+                         <div class="row">
+                      <div class="row">
+                          <img class="col-xs-6 img img-responsive" src="/esq_export_register/static/description/esquire.jpg"/>
+                      </div>
+                      <div class="row">
+                          <div class="col-xs-7 col-xs-offset-1">
+                              <p>HEAD OFFICE:</p>
+                              <p>IDEAL TRADE CENTER,102,SHAHEEDTAJUDDIN AHMED SARANI,TEJGAON I/A,DHAKA-1208;TEL:9129396,9113161,9112539; FAX:880-2-8122181 ;E-mail:esquire@bangla.net</p>
+                          </div>
+                          <div class="col-xs-4">
+                              <p>Factory:</p>
+                                <p>JAMALDI,GAZARIA,MUNSHIGONJ.</p>
+                                </div>
+                            </div>
+                         </div>
+                         <h3>Commercial Invoice</h3>
+                         <hr/>
+                     </div>
+                     <div>
+                         <table>
+                              <tr class="row">
+                                 <td class="col-xs-4" style="border:2px solid black">Commercial Invoice No</td>
+                                 <td class="col-xs-4" style="border-bottom: 2px solid black ;border-top: 2px solid black;">
+                                           <span t-field="o.register_lines.comm_invoice_no"/></td>
+                                 <td class="col-xs-4" style="border-bottom: 2px solid black ;border-top: 2px solid black;border-right: 2px solid black;">
+                                            Date :<span t-field="o.up_to_date"/></td>
+                              </tr>
+                              <tr class="row">
+                                 <td class="col-xs-4" style="border:2px solid black">L/C Number</td>
+                                 <td class="col-xs-4" style="border-bottom: 2px solid black ;border-top: 2px solid black;">
+                                            <span t-field="o.register_lines.exp_lc_no"/></td>
+                                 <td class="col-xs-4" style="border-bottom: 2px solid black ;border-top: 2px solid black;border-right: 2px solid black;">
+                                            Date :<span t-field="o.register_lines.exp_lc_date"/></td>
+                              </tr>
+                              <tr class="row">
+                                 <td class="col-xs-4" style="border:2px solid black">L/C Issuing Bank</td>
+                                 <td class="col-xs-4" style="border-bottom: 2px solid black ;border-top: 2px solid black;">
+                                            <span t-field="o.register_lines.issue_bnk"/></td>
+                                 <td class="col-xs-4" style="border-bottom: 2px solid black ;border-top: 2px solid black;border-right: 2px solid black;">
+                                             </td>
+                              </tr>
+                              <tr class="row">
+                                   <td colspan="3" style="border:2px solid black">
+                                         <span t-field="o.register_lines.customer"/>
+                                    </td>
+                              </tr>
+                              <tr class="row">
+                                   <td colspan="3" style="border:2px solid black">
+                                         Place Of Loading :<span t-field="o.register_lines.customer"/>
+                                    </td>
+                              </tr>
+                              <tr class="row">
+                                   <td colspan="3" style="border:2px solid black">
+                                         Final Designation :<span t-field="o.register_lines.customer"/>
+                                    </td>
+                              </tr>
+                              <tr class="row">
+                                   <td colspan="3" style="border:2px solid black">
+                                         Name Of CARRIER :<span t-field="o.register_lines.customer"/>
+                                    </td>
+                              </tr>
+                              <tr class="row">
+                                   <td colspan="3" style="border:2px solid black">
+                                         TERMS OF DELIVERY :<span t-field="o.register_lines.issue_bnk"/>
+                                    </td>
+                              </tr>
+                              <tr class="row">
+                                   <td colspan="3" style="border:2px solid black">
+                                         SHIPMENT DATE : <span t-field="o.register_lines.customer"/>
+                                   </td>
+                              </tr>
+                         </table>
+                         <table>
+                             <tr class="row">
+                                 <td class="col-xs-5" style="border: 2px solid black ;">COMMODITY and DESCRIPTION</td>
+                                 <td class="col-xs-2" style="border: 2px solid black ;">QUANTITY PCS</td>
+                                 <td class="col-xs-2" style="border: 2px solid black ;">UNIT PRICE/100 PCS</td>
+                                 <td class="col-xs-3" style="border: 2px solid black ;">TOTAL AMOUNT IN USD</td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5" style="border: 2px solid black ;">ACCESSORIES FOR EXPORT ORIENTED READYMADE GARMENTS INDUSTRY QUANTITY,QUALITY,UNIT PRICE AND OTHER
+                                     SPECIFICATION AS PER BENEFICIARY'S PROFORMA INVOICE NO-<span t-field="o.register_lines.pi_no"/></td>
+                                 <td class="col-xs-2" style="border: 2px solid black ;"><span t-field="o.register_lines.pi_no"/></td>
+                                 <td class="col-xs-2" style="border: 2px solid black ;"><span t-field="o.register_lines.pi_no"/></td>
+                                 <td class="col-xs-3" style="border: 2px solid black ;"><span t-field="o.register_lines.pi_no"/></td>
+                             </tr>
+                             <tr class="row"></tr>
+                             <tr class="row"></tr>
+                             <tr class="row">
+                                 <td class="col-xs-5" style="border: 2px solid black ;">
+                                                 <br/>
+                                     SALES CONTRACT NO : <span t-field="o.register_lines.sale_contract_no"/><br/>
+                                     ARMOUR : <span t-field="o.register_lines.amend_dt"/><br/>
+                                     ISSUING BANK BIN NO : <span t-field="o.register_lines.bnk_bin"/><br/>
+                                     APPLICATION BIN NO : <span t-field="o.register_lines.lc_appl_bin"/><br/>
+                                 </td>
+                                 <td colspan="3" style="border: 2px solid black ;">
+                                     <p class="col-xs-offset-2">CERTIFYING MERCHANDISE IS OF BANGLADESH</p>
+                                     <h4 class="col-xs-offset-3"><b>ESQUIRE ACCESSORIES LTD</b></h4>
+                                     <hr/>
+                                     <br/>
+                                     <br/>
+                                     <hr/>
+                                     <p class="col-xs-offset-5">Authorized Signature</p>
+                                 </td>
+                             </tr>
+                         </table>
+
+                     </div>
+                 </div>
+
+         </t>
+     </t>
+</template>
+
+<!--<template id="report_of_export">-->
+    <!--<t t-call="report.html_container">-->
+        <!--<t t-foreach="doc_ids" t-as="doc_id">-->
+            <!--<t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'esq_export_register.report_export_commercial_invoice_document')"/>-->
+        <!--</t>-->
+    <!--</t>-->
+<!--</template>-->
+</data>
+</openerp>

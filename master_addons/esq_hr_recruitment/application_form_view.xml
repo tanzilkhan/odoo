@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!--<record model="ir.ui.view" id="view_job_application_form">-->
+            <!--<field name="name">job.application.form.tree</field>-->
+            <!--<field name="model">hr.applicant</field>-->
+            <!--<field name="type">form</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="job_application" version="7.0">-->
+
+
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <record id="hr_recruitment_form" model="ir.ui.view">
+            <field name="name">hr.recruitment.form.form</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+            <field name="arch" type="xml">
+
+                <!--<xpath expr="/form/header/field[@name='stage_id']"-->
+                       <!--position="replace">-->
+                    <!--<field name="stage_id" widget="statusbar"/>-->
+                <!--</xpath>-->
+
+                <!--<xpath expr="//field[@name='stage_id']"-->
+                       <!--position="before">-->
+                    <!--<button name="button_next" string="Selected" type="object" class="oe_highlight" />-->
+                    <!--<button name="button_refuse" string="Refuse" type="object" class="oe_highlight" />-->
+                <!--</xpath>-->
+
+
+                <xpath expr="/form/sheet/div[@class='oe_title']"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="/form/sheet/group"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="/form/sheet/group/field[@name='categ_ids']"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="/form/sheet/div/button[@name='action_makeMeeting']"
+                       position="attributes">
+                    <attribute name="attrs">{'invisible':[('stage_id','in',4,5,6)]}</attribute>
+                </xpath>
+
+                <xpath expr="/form/sheet/separator[@string='Application Summary']"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <!--<xpath expr="/form/header/button[@name='case_close_with_emp']"-->
+                       <!--position="attributes">-->
+                    <!--<attribute name="attrs">{'invisible':['|', ('stage_id','=',1)]}</attribute>-->
+                <!--</xpath>-->
+
+                <xpath expr="/form/header/field[@name='stage_id']"
+                       position="attributes">
+                    <attribute name="attrs">{'invisible':[ ('stage_id','=',6)]}</attribute>
+                </xpath>
+
+
+                <xpath expr="/form/sheet/field[@name='description']"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="/form/sheet/group" position="after">
+                    <form string="job_application">
+                            <button string="Create Employee" name="create_employee_from_applicant" type="object"
+                                    class="oe_link oe_inline" style="margin-left: 8px;"
+                                    attrs="{'invisible': [('emp_id', '!=', False),('stage_id','=',1)]}"/>
+                        <group colspan="2" attrs="{'invisible':[ ('stage_id','in',(2,5))]}">
+
+                            <group>
+                                <!--<field name="designation_apply_for" />-->
+                                <field name="upload_photo" widget='image'/>
+                                <field name="job_id" on_change="onchange_job(job_id)" required="True"/>
+                                <field name="recruitment_no"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group colspan="2" attrs="{'invisible':[('stage_id','in',(2,5))]}">
+                            <group string="Personal Information">
+
+                                <field name="applicant_title" />
+                                <field name="name" required='False' invisible="True"/>
+                                <field name="partner_name" required='True'/>
+                                <field name="father_name" />
+                                <field name="mother_name" />
+                                <field name="partner_phone" />
+                                <field name="partner_mobile" />
+                                <field name="applicant_gender" />
+                                <field name="nationality" />
+                                <field name="nid" />
+                                <field name="email_from" widget="email" required='True' />
+                                <field name="date_of_birth" />
+                                <field name="present_address" />
+                                <field name="permanent_address"  />
+                            </group>
+                            <group>
+                                <div>
+                                    <group string="Academic Qualification">
+                                        <field name="type_id" placeholder="Highest Degree" required='True'/>
+                                        <field name="institution" />
+                                    </group>
+                                    <group string="Experience">
+                                        <field name="latest_designation" />
+                                        <field name="company" />
+                                    </group>
+                                    <field name="resume" widget="many2many_binary" string="Upload Resume" />
+                                </div>
+                            </group>
+
+                        </group>
+
+
+                        <!--<group string="Joining Form" attrs="{'invisible':[ ('stage_id','!=',5)]}" >-->
+                            <!--<field name="joining_date"/>-->
+                            <!--<field name="induction"/>-->
+                            <!--<field name="domain_it_dept"/>-->
+                            <!--<field name="security_dept"/>-->
+                            <!--<field name="support_service"/>-->
+                        <!--</group>-->
+
+                        <group string="Testing Design" attrs="{'invisible':[ ('stage_id','in',(1,5))]}">
+                            <!--<group>-->
+                                <!--<field name="black_list"/>-->
+                            <!--</group>-->
+
+                                <button type="object" string="Interview" name="interview_button" style="margin-left: 8px;" /><br></br>
+                                <div>
+                                    <field name="test_design" widget="one2many_list">
+                                        <tree string="Test Summary" editable="bottom">
+                                            <field name="test_name"/>
+                                            <field name="total_marks" sum="Total Marks"/>
+                                        </tree>
+                                    </field>
+                                </div>
+
+                        </group>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!--<record model="ir.ui.view" id="view_job_application_tree">-->
+            <!--<field name="name">job.application.form.tree</field>-->
+            <!--<field name="model">hr.applicant</field>-->
+            <!--<field name="type">tree</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<tree string="job_application">-->
+
+                <!--</tree>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<record id="hr_recruitment_tree" model="ir.ui.view">-->
+            <!--<field name="name">hr.recruitment.form.form</field>-->
+            <!--<field name="model">hr.applicant</field>-->
+            <!--<field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//field[@name='name']" position="after">-->
+                    <!--&lt;!&ndash;<tree string="Application Forms">&ndash;&gt;-->
+                        <!--<field name="applicant_title" />-->
+                        <!--&lt;!&ndash;<field name="partner_name"/>&ndash;&gt;-->
+                        <!--<field name="father_name"/>-->
+                        <!--<field name="mother_name"/>-->
+                <!--&lt;!&ndash;</tree>&ndash;&gt;-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <record model="ir.actions.act_window" id="action_job_application_form_main">
+            <field name="name">Job Application Form</field>
+            <field name="res_model">hr.applicant</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('black_list','not in',[True])]</field>
+        </record>
+
+
+
+        <!--<menuitem name="Job Application Form" id="child_menu_job_application_form_item" parent="menu_requisition_requisition_item" action="action_job_application_form_main"/>-->
+
+        <!--<record id="hr_recruitment_meeting_form" model="ir.ui.view">-->
+            <!--<field name="name">crm.meeting.form</field>-->
+            <!--<field name="model">crm.meeting</field>-->
+            <!--<field name="inherit_id" ref="base_calendar.view_crm_meeting_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//page[@string='Options']"-->
+                       <!--position="attributes">-->
+                    <!--<attribute name="invisible">True</attribute>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record model="ir.actions.act_window" id="action_interview_test">-->
+            <!--<field name="name">Questions Set</field>-->
+            <!--<field name="res_model">interview.test</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">tree,form</field>-->
+        <!--</record>-->
+        <!--<menuitem name="Question Set of Applicant" id="menu_action_interview_form_id" parent="menu_requisition_requisition_item" action="action_interview_test"/>-->
+
+        <record model="ir.ui.view" id="view_interview_test_form">
+            <field name="name">interview.test.form</field>
+            <field name="model">interview.test</field>
+            <field name="arch" type="xml">
+                <form string="interview.test" version="7.0">
+                    <group>
+                        <button type="object" string="Save" name="form_save_button" />
+                        <group colspan="2">
+                            <group>
+                                <field name="name_of_candidate"/>
+                                <field name="pin"/>
+                                <field name="post_applied_for"/>
+                                <field name="ref_source"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="present_salary"/>
+                                <field name="expected_salary"/>
+                                <field name="other_remarks"/>
+                            </group>
+                        </group>
+
+                        <field name="applicant_question_set">
+                            <tree editable="top">
+                                <field name="question"/>
+                                <field name="weight"/>
+                                <field name="scale" on_change="onchange_total_marks(scale, weight)"/>
+                                <field name="total" sum="Total Marks"/>
+                                <field name="remarks"/>
+                            </tree>
+                        </field>
+
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_interview_test_id">
+            <field name="name">Questions Set</field>
+            <field name="res_model">interview.test</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+        <!--<menuitem name="Question Set of Applicant" id="menu_action_interview_form" parent="menu_requisition_requisition_item" action="action_interview_test_id"/>-->
+
+    </data>
+</openerp>

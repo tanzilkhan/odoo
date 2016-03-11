@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_launch_recruitment_form">
+        <field name="name">launch.recruitment.form</field>
+        <field name="model">launch.recruitment</field>
+        <field name="arch" type="xml">
+             <form string="launch_recruitment" >
+                 <header>
+                    <button name="job_done" string="Stop Recruitment" states="draft" type="object" class="oe_highlight" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                 </header>
+                 <group colspan="2">
+                    <group>
+                        <field name="wf_requisition" readonly="1"/>
+                        <field name="department_id" readonly="1"/>
+                        <!--<field name="company_industry_type" />-->
+                        <!--<field name="no_of_vacancies" readonly="1" />-->
+                        <field name="job_title" on_change="onchange_job_title(job_title)" readonly="1"/>
+                        <field name="receive_cv" />
+                        <field name="application_deadline_date" />
+                        <field name="age_min" />
+                        <field name="age_max" />
+                        <!--<field name="applicant_gender"/>-->
+                        <field name="job_responsibility"/>
+
+                    </group>
+                    <group>
+
+                        <field name="job_level"/>
+                        <field name="educational_qualification"/>
+                        <field name="year_min"/>
+                        <field name="year_max"/>
+                        <field name="job_location"/>
+                        <!--<field name="company_name"/>-->
+                        <field name="company_address"/>
+                        <field name="compensation_benefits"/>
+                        <field name="additional_responsibility"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_launch_recruitment_tree">
+        <field name="name">launch.recruitment.tree</field>
+        <field name="model">launch.recruitment</field>
+        <field name="arch" type="xml">
+            <tree string="launch_recruitment">
+                <field name="wf_requisition"/>
+                <field name="department_id" />
+                <field name="job_title"/>
+                <button name="apply_button" string="Apply Now" type="object" icon="gtk-yes"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record model="ir.actions.act_window" id="action_launch_recruitment">
+        <field name="name">Job Opening</field>
+        <field name="res_model">launch.recruitment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','!=','done')]</field>
+    </record>
+
+    <menuitem name="Job Opening" id="child_menu_launch_recruitment_item" parent="base.menu_crm_case_job_req_main" action="action_launch_recruitment"/>
+
+
+
+
+
+    <!--<record model="ir.ui.view" id="view_launch_recruitment_done_form">-->
+        <!--<field name="name">launch.recruitment.form</field>-->
+        <!--<field name="model">launch.recruitment</field>-->
+        <!--<field name="arch" type="xml">-->
+             <!--<form string="launch_recruitment" version="7.0">-->
+                 <!--<header>-->
+                    <!--<button name="job_done" string="Lunch Recruitment" states="draft" type="object" class="oe_highlight" />-->
+                    <!--<field name="state" widget="statusbar" statusbar_visible="draft,done"/>-->
+                 <!--</header>-->
+                 <!--<group colspan="2">-->
+                    <!--<group>-->
+                        <!--<field name="wf_requisition" readonly="1"/>-->
+                        <!--<field name="department_id" />-->
+                        <!--<field name="company_industry_type" />-->
+                        <!--<field name="no_of_vacancies" />-->
+                        <!--<field name="job_title" />-->
+                        <!--<field name="receive_cv" />-->
+                        <!--<field name="application_deadline_date" />-->
+                        <!--<field name="age_min" />-->
+                        <!--<field name="age_max" />-->
+                    <!--</group>-->
+                    <!--<group>-->
+                        <!--<field name="applicant_gender"/>-->
+                        <!--<field name="job_level"/>-->
+                        <!--<field name="educational_qualification"/>-->
+                        <!--<field name="job_responsibility"/>-->
+                        <!--<field name="additional_responsibility"/>-->
+                        <!--<field name="year_min"/>-->
+                        <!--<field name="year_max"/>-->
+                        <!--<field name="job_location"/>-->
+                        <!--<field name="company_name"/>-->
+                        <!--<field name="company_address"/>-->
+                        <!--<field name="compensation_benefits"/>-->
+                    <!--</group>-->
+                <!--</group>-->
+            <!--</form>-->
+        <!--</field>-->
+    <!--</record>-->
+
+    <record model="ir.ui.view" id="view_launch_recruitment_done_tree">
+        <field name="name">launch.recruitment.tree</field>
+        <field name="model">launch.recruitment</field>
+        <field name="arch" type="xml">
+            <tree string="launch_recruitment">
+                <field name="wf_requisition"/>
+                <field name="department_id" />
+                <field name="job_title"/>
+                <button name="apply_button" string="Apply Now" type="object" icon="gtk-yes"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record id="action_launch_recruitment_done" model="ir.actions.act_window">
+            <field name="name">Job Opening Done</field>
+            <field name="res_model">launch.recruitment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_launch_recruitment_done_tree"/>
+            <field name="domain">[('state','=','done')]</field>
+    </record>
+
+
+    <menuitem name="Job Opening Done" id="child_menu_launch_recruitment_item_done" parent="base.menu_crm_case_job_req_main" action="action_launch_recruitment_done"/>
+
+
+</data>
+</openerp>

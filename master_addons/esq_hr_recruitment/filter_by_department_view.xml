@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record model="ir.actions.act_window" id="action_department_filter">
+        <field name="name">Filter by department</field>
+        <field name="res_model">hr.cv.filter</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('selected_application','=','initially_selected')]</field>
+    </record>
+
+    <menuitem name="Filter by department" id="child_menu_department_filter_item" parent="menu_requisition_requisition_item" action="action_department_filter"/>
+
+</data>
+</openerp>

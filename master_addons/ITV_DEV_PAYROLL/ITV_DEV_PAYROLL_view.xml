@@ -1,0 +1,1299 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <menuitem id="menu_hr_root_payroll_config" parent="hr.menu_hr_root" name="Payroll Configuration"
+                  sequence="49" />
+        <menuitem id="allowance_rules" parent="menu_hr_root_payroll_config" name="Allowances"
+                  sequence="1030"/>
+        <menuitem id="deduction_rules" parent="menu_hr_root_payroll_config" name="Deductions"
+                  sequence="1030"/>
+
+        <record model="ir.actions.act_window" id="action_hr_daily_allowance">
+            <field name="name">Attendance Allowance</field>
+            <field name="res_model">hr.daily.allowance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+        <menuitem parent="allowance_rules" id="menu_hr_daily_allowance" action="action_hr_daily_allowance"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_daily_allowance_tree">
+            <field name="name">hr.daily.allowance.tree</field>
+            <field name="model">hr.daily.allowance</field>
+            <field name="arch" type="xml">
+                <tree string="Attendance Allowance">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <!--<field name="percent_amount"/>-->
+                    <field name="date"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_daily_allowance_form" model="ir.ui.view">
+            <field name="name">hr.daily.allowance.form</field>
+            <field name="model">hr.daily.allowance</field>
+            <field name="arch" type="xml">
+                <form string="Attendance Allowance" >
+                    <sheet>
+
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                            <field name="date"/>
+                        </group>
+
+                        <!--<group col="4">-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        <!--</group>-->
+
+                        <group>
+                            <!--<field name="on_basic" on_change="myonchange(on_basic)"/>-->
+                            <!--<field name="on_gross" on_change="myonchange(on_gross)"/>-->
+                            <field name="amount"/>
+                            <!--<field name="percent_amount"/>-->
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- holiday allowance -->
+        <record model="ir.actions.act_window" id="action_hr_holiday_allowance">
+            <field name="name">Holiday Allowance</field>
+            <field name="res_model">hr.holiday.allowance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+        <menuitem parent="allowance_rules" id="menu_hr_holiday_allowance"
+                  action="action_hr_holiday_allowance"
+                  sequence="1006"/>
+
+        <record model="ir.ui.view" id="view_holiday_allowance_tree">
+            <field name="name">hr.holiday.allowance.tree</field>
+            <field name="model">hr.holiday.allowance</field>
+            <field name="arch" type="xml">
+                <tree string="Holiday Allowance">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <!--<field name="on_gross"/>-->
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_holiday_allowance_form" model="ir.ui.view">
+            <field name="name">hr.holiday.allowance.form</field>
+            <field name="model">hr.holiday.allowance</field>
+            <field name="arch" type="xml">
+                <form string="Holiday Allowance" >
+                    <sheet>
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+                        <group>
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <!--<field name="amount" attrs="{'invisible':['|',('on_basic','=',True),('on_gross','=',True)]}" />-->
+                            <field name="amount"/>
+                            <!--<field name="on_gross"/>-->
+                            <!--<field name="percent_amount" attrs="{'invisible':[('on_basic','!=',True),('on_gross','!=',True)]}"/>-->
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Maternity Allowance-->
+        <record model="ir.actions.act_window" id="action_hr_maternity_allowance">
+            <field name="name">Maternity Leave Payment</field>
+            <field name="res_model">hr.maternity.allowance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+        <!--<menuitem parent="allowance_rules" id="menu_hr_maternity_allowance"-->
+                  <!--action="action_hr_maternity_allowance"-->
+                  <!--sequence="1010"/>-->
+
+        <record model="ir.ui.view" id="view_maternity_allowance_tree">
+            <field name="name">hr.maternity.allowance.tree</field>
+            <field name="model">hr.maternity.allowance</field>
+            <field name="arch" type="xml">
+                <tree string="Maternity Leave Payment">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_maternity_allowance_form" model="ir.ui.view">
+            <field name="name">hr.maternity.allowance.form</field>
+            <field name="model">hr.maternity.allowance</field>
+            <field name="arch" type="xml">
+                <form string="Maternity Leave Payment" >
+                   <sheet>
+                        <group col="2">
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+                        <group col="2">
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                            <field name="date"/>
+                            <field name="date_to"/>
+                            <field name="payment_type"/>
+                            <field name="amount"/>
+                        </group>
+
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--bonus allowance-->
+        <record model="ir.actions.act_window" id="action_hr_bonus_allowance">
+            <field name="name">Incentive Allowance</field>
+            <field name="res_model">hr.bonus.allowance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="allowance_rules" id="menu_hr_bonus_allowance"
+                  action="action_hr_bonus_allowance"
+                  sequence="1006"/>
+
+        <record model="ir.ui.view" id="view_bonus_allowance_tree">
+            <field name="name">hr.bonus.allowance.tree</field>
+            <field name="model">hr.bonus.allowance</field>
+            <field name="arch" type="xml">
+                <tree string="Incentive Allowance">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="percent_amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_bonus_allowance_form" model="ir.ui.view">
+            <field name="name">hr.bonus.allowance.form</field>
+            <field name="model">hr.bonus.allowance</field>
+            <field name="arch" type="xml">
+                <form string="Incentive Allowance" >
+                    <sheet>
+                        <group col="2">
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+                        <group col="2">
+                            <!--<field name="employee_pin"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+                        <group col="4">
+                            <!--<field name="on_basic" on_change="myonchange(on_basic)"/>-->
+                            <!--<field name="on_gross" on_change="myonchange(on_gross)"/>-->
+                            <!--<field name="percent_amount" attrs="{'invisible':[('on_basic','!=',True),('on_gross','!=',True)]}"/>-->
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- provident deduction -->
+        <record model="ir.actions.act_window" id="action_hr_provident_deduction">
+            <field name="name">Provident Fund Deduction</field>
+            <field name="res_model">hr.provident.deduction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--<menuitem parent="deduction_rules" id="menu_hr_provident_deduction"-->
+                  <!--action="action_hr_provident_deduction"-->
+                  <!--sequence="1006"/>-->
+
+        <record model="ir.ui.view" id="view_provident_deduction_tree">
+            <field name="name">hr.provident.deduction.tree</field>
+            <field name="model">hr.provident.deduction</field>
+            <field name="arch" type="xml">
+                <tree string="Provident Fund Deduction">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="on_basic"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_provident_deduction_form" model="ir.ui.view">
+            <field name="name">hr.provident.deduction.form</field>
+            <field name="model">hr.provident.deduction</field>
+            <field name="arch" type="xml">
+                <form string="Provident Fund Deduction" >
+                    <sheet>
+                        <group col="2">
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <group col="2">
+                            <!--<field name="employee_pin"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                            <field name="date"/>
+                        </group>
+
+                        <group col="2">
+                            <!--<field name="amount" attrs="{'invisible':['|',('on_basic','=',True),('on_gross','=',True)]}" />-->
+                            <field name="on_basic"/>
+                            <!--<field name="on_gross"/>-->
+                            <!--<field name="percent_amount" attrs="{'invisible':[('on_basic','!=',True),('on_gross','!=',True)]}"/>-->
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- -->
+        <record model="ir.actions.act_window" id="action_hr_special_allowance">
+            <field name="name">Adjust Allowance</field>
+            <field name="res_model">hr.special.allowance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="allowance_rules" id="menu_hr_special_allowance"
+                  action="action_hr_special_allowance"
+                  sequence="1006"/>
+
+        <record model="ir.ui.view" id="view_hr_special_allowance_tree">
+            <field name="name">hr.special.allowance.tree</field>
+            <field name="model">hr.special.allowance</field>
+            <field name="arch" type="xml">
+                <tree string="Adjust Allowance">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_special_allowance_form" model="ir.ui.view">
+            <field name="name">hr.special.allowance.form</field>
+            <field name="model">hr.special.allowance</field>
+            <field name="arch" type="xml">
+                <form string="Adjust Allowance" >
+                    <sheet>
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <!--<group col="4">-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        <!--</group>-->
+
+                        <group>
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_hr_arrear_salary">
+            <field name="name">Arrear Salary</field>
+            <field name="res_model">hr.arrear.salary</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="allowance_rules" id="menu_hr_arrear_salary" action="action_hr_arrear_salary"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_hr_arrear_salary_tree">
+            <field name="name">hr.arrear.salary.tree</field>
+            <field name="model">hr.arrear.salary</field>
+            <field name="arch" type="xml">
+                <tree string="Arrear Salary">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                    <field name="arrear_type"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_arrear_salary_form" model="ir.ui.view">
+            <field name="name">hr.arrear.salary.form</field>
+            <field name="model">hr.arrear.salary</field>
+            <field name="arch" type="xml">
+                <form string="Arrear Salary" >
+                    <sheet>
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <group>
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        </group>
+
+                        <group>
+                            <!--<field name="arrear_type"/>-->
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <!--<field name="arrear_type"/>-->
+                            <field name="amount"/>
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_hr_other_earnings">
+            <field name="name">Overtime Allowance</field>
+            <field name="res_model">hr.other.earnings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="allowance_rules" id="menu_hr_other_earnings" action="action_hr_other_earnings"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_hr_other_earnings_tree">
+            <field name="name">hr.other.earnings.tree</field>
+            <field name="model">hr.other.earnings</field>
+            <field name="arch" type="xml">
+                <tree string="Overtime Allowance">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_other_earnings_form" model="ir.ui.view">
+            <field name="name">hr.other.earnings.form</field>
+            <field name="model">hr.other.earnings</field>
+            <field name="arch" type="xml">
+                <form string="Overtime Allowance" >
+                    <sheet>
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <!--<group col="4">-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        <!--</group>-->
+
+                        <group>
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Night Allowance -->
+        <record model="ir.actions.act_window" id="action_hr_night_allowance">
+            <field name="name">Night Allowance</field>
+            <field name="res_model">hr.night.allowance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="allowance_rules" id="menu_hr_night_allowance" action="action_hr_night_allowance"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_hr_night_allowance_tree">
+            <field name="name">hr.night.allowance.tree</field>
+            <field name="model">hr.night.allowance</field>
+            <field name="arch" type="xml">
+                <tree string="Night Allowance">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_night_allowance_form" model="ir.ui.view">
+            <field name="name">hr.night.allowance.form</field>
+            <field name="model">hr.night.allowance</field>
+            <field name="arch" type="xml">
+                <form string="Night Allowance" >
+                    <sheet>
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <!--<group col="4">-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        <!--</group>-->
+
+                        <group>
+                            <field name="date"/>
+                        </group>
+
+                        <group>
+                            <field name="night_no"/>
+                            <field name="night_rate"/>
+                            <field name="amount"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Absent Deduction-->
+        <record model="ir.actions.act_window" id="action_hr_absent_deduction">
+            <field name="name">Absent Deduction</field>
+            <field name="res_model">hr.absent.deduction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="deduction_rules" id="menu_hr_absent_deduction" action="action_hr_absent_deduction"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_hr_absent_deduction_tree">
+            <field name="name">hr.absent.deduction.tree</field>
+            <field name="model">hr.absent.deduction</field>
+            <field name="arch" type="xml">
+                <tree string="Absent Deduction">
+                    <field name="emp_id"/>
+                    <field name="employee_pin"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_absent_deduction_form" model="ir.ui.view">
+            <field name="name">hr.absent.deduction.form</field>
+            <field name="model">hr.absent.deduction</field>
+            <field name="arch" type="xml">
+                <form string="Absent Deduction" >
+                    <sheet>
+                        <!--<group col="2">-->
+                            <!--<field name="emp_id" on_change="on_change_emp_id(emp_id)"/>-->
+                        <!--</group>-->
+
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        </group>
+
+                        <group>
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!--
+        <record model="ir.actions.act_window" id="action_hr_pf_deduction">
+            <field name="name">PF Deduction</field>
+            <field name="res_model">hr.pf.deduction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+        <menuitem parent="deduction_rules" id="menu_hr_pf_deduction" action="action_hr_pf_deduction"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_hr_pf_deduction_tree">
+            <field name="name">hr.pf.deduction.tree</field>
+            <field name="model">hr.pf.deduction</field>
+            <field name="arch" type="xml">
+                <tree string="PF Deduction">
+
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_pf_deduction_form" model="ir.ui.view">
+            <field name="name">hr.pf.deduction.form</field>
+            <field name="model">hr.pf.deduction</field>
+            <field name="arch" type="xml">
+                <form string="PF Deduction" >
+                    <sheet>
+
+                        <group col="2">
+                            <field name="emp_id" on_change="on_change_emp_id(emp_id)"/>
+
+                        </group>
+
+                        <group col="4">
+                            <field name="employee_id"/>
+                            <field name="position"/>
+                            <field name="department"/>
+                        </group>
+
+                        <group col="4">
+                            <field name="date"/>
+                            <field name="amount"/>
+
+
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        -->
+        <record model="ir.actions.act_window" id="action_hr_advance_salary">
+            <field name="name">Advance Salary</field>
+            <field name="res_model">hr.advance.salary</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--<menuitem parent="deduction_rules" id="menu_hr_advance_salary" action="action_hr_advance_salary"-->
+                  <!--sequence="1006"/>-->
+
+
+        <record model="ir.ui.view" id="view_hr_advance_salary_tree">
+            <field name="name">hr.advance.salary.tree</field>
+            <field name="model">hr.advance.salary</field>
+            <field name="arch" type="xml">
+                <tree string="Advance Salary">
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_advance_salary_form" model="ir.ui.view">
+            <field name="name">hr.advance.salary.form</field>
+            <field name="model">hr.advance.salary</field>
+            <field name="arch" type="xml">
+                <form string="Advance Salary" >
+                    <sheet>
+                        <group col="2">
+                            <field name="emp_id" on_change="on_change_emp_id(emp_id)"/>
+                        </group>
+
+                        <group col="4">
+                            <field name="employee_id"/>
+                            <field name="position"/>
+                            <field name="department"/>
+                        </group>
+
+                        <group col="4">
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_hr_mobile_bill">
+            <field name="name">Others Deduction</field>
+            <field name="res_model">hr.mobile.bill</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="deduction_rules" id="menu_hr_mobile_bill" action="action_hr_mobile_bill"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_hr_mobile_bill_tree">
+            <field name="name">hr.mobile.bill.tree</field>
+            <field name="model">hr.mobile.bill</field>
+            <field name="arch" type="xml">
+                <tree string="Others Deduction">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_mobile_bill_form" model="ir.ui.view">
+            <field name="name">hr.mobile.bill.form</field>
+            <field name="model">hr.mobile.bill</field>
+            <field name="arch" type="xml">
+                <form string="Others Deduction" >
+                    <sheet>
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <!--<group col="4">-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        <!--</group>-->
+
+                        <group>
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--loan deduction-->
+        <record model="ir.actions.act_window" id="action_hr_loan_deduction">
+            <field name="name">Loan Deduction</field>
+            <field name="res_model">hr.loan.deduction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="deduction_rules" id="menu_hr_loan_deduction" action="action_hr_loan_deduction"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_hr_loan_deduction_tree">
+            <field name="name">hr.loan.deduction.tree</field>
+            <field name="model">hr.loan.deduction</field>
+            <field name="arch" type="xml">
+                <tree string="Loan Deduction">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_loan_deduction_form" model="ir.ui.view">
+            <field name="name">hr.loan.deduction.form</field>
+            <field name="model">hr.loan.deduction</field>
+            <field name="arch" type="xml">
+                <form string="Loan Deduction" >
+                    <sheet>
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <!--<group col="4">-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        <!--</group>-->
+
+                        <group>
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--eips loan-->
+        <record model="ir.actions.act_window" id="action_eips_deduction">
+            <field name="name">EIPS Deduction</field>
+            <field name="res_model">hr.eips.deduction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="deduction_rules" id="menu_hr_eips_deduction" action="action_eips_deduction"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_hr_eips_deduction_tree">
+            <field name="name">hr.eips.deduction.tree</field>
+            <field name="model">hr.eips.deduction</field>
+            <field name="arch" type="xml">
+                <tree string="Others Deduction">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_eips_deduction_form" model="ir.ui.view">
+            <field name="name">hr.eips.deduction.form</field>
+            <field name="model">hr.eips.deduction</field>
+            <field name="arch" type="xml">
+                <form string="Others Deduction" >
+                    <sheet>
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <!--<group col="4">-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        <!--</group>-->
+
+                        <group>
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--pfloan deduction-->
+        <record model="ir.actions.act_window" id="action_hr_pfloan_deduction">
+            <field name="name">PF Loan Deduction</field>
+            <field name="res_model">hr.pfloan.deduction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="deduction_rules" id="menu_hr_pfloan_deduction" action="action_hr_pfloan_deduction"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_hr_pfloan_deduction_tree">
+            <field name="name">hr.pfloan.deduction.tree</field>
+            <field name="model">hr.pfloan.deduction</field>
+            <field name="arch" type="xml">
+                <tree string="PF Loan Deduction">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_pfloan_deduction_form" model="ir.ui.view">
+            <field name="name">hr.pfloan.deduction.form</field>
+            <field name="model">hr.pfloan.deduction</field>
+            <field name="arch" type="xml">
+                <form string="Others Deduction" >
+                    <sheet>
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <!--<group col="4">-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        <!--</group>-->
+
+                        <group>
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--carloan deduction-->
+        <record model="ir.actions.act_window" id="action_hr_carloan_deduction">
+            <field name="name">Car Loan Deduction</field>
+            <field name="res_model">hr.carloan.deduction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="deduction_rules" id="menu_hr_carloan_deduction" action="action_hr_carloan_deduction"
+                  sequence="1006"/>
+
+
+        <record model="ir.ui.view" id="view_hr_carloan_deduction_tree">
+            <field name="name">hr.carloan.deduction.tree</field>
+            <field name="model">hr.carloan.deduction</field>
+            <field name="arch" type="xml">
+                <tree string="Car Loan Deduction">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_carloan_deduction_form" model="ir.ui.view">
+            <field name="name">hr.carloan.deduction.form</field>
+            <field name="model">hr.carloan.deduction</field>
+            <field name="arch" type="xml">
+                <form string="Car Loan Deduction" >
+                    <sheet>
+                        <group>
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <!--<group col="4">-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                        <!--</group>-->
+
+                        <group>
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_hr_revenue_stamp">
+            <field name="name">Reveneue Stamp</field>
+            <field name="res_model">hr.revenue.stamp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--<menuitem parent="menu_hr_root_payroll_config" id="menu_hr_revenue_stamp" action="action_hr_revenue_stamp"-->
+                  <!--sequence="1006"/>-->
+
+
+        <record model="ir.ui.view" id="view_hr_revenue_stamp_tree">
+            <field name="name">hr.revenue.stamp.tree</field>
+            <field name="model">hr.revenue.stamp</field>
+            <field name="arch" type="xml">
+                <tree string="Reveneue Stamp">
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_revenue_stamp_form" model="ir.ui.view">
+            <field name="name">hr.revenue.stamp.form</field>
+            <field name="model">hr.revenue.stamp</field>
+            <field name="arch" type="xml">
+                <form string="Reveneue Stamp" >
+                    <sheet>
+                        <group col="2">
+                            <field name="emp_id" on_change="on_change_emp_id(emp_id)"/>
+                        </group>
+
+                        <group col="4">
+                            <field name="employee_id"/>
+                            <field name="position"/>
+                            <field name="department"/>
+                        </group>
+
+                        <group col="4">
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_hr_other_deduction">
+            <field name="name">Other Deduction</field>
+            <field name="res_model">hr.other.deduction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--<menuitem parent="deduction_rules" id="menu_hr_other_deduction" action="action_hr_other_deduction"-->
+                  <!--sequence="1006"/>-->
+
+
+        <record model="ir.ui.view" id="view_hr_other_deduction_tree">
+            <field name="name">hr.other.deduction.tree</field>
+            <field name="model">hr.other.deduction</field>
+            <field name="arch" type="xml">
+                <tree string="Other Deduction">
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_other_deduction_form" model="ir.ui.view">
+            <field name="name">hr.other.deduction.form</field>
+            <field name="model">hr.other.deduction</field>
+            <field name="arch" type="xml">
+                <form string="Other Deduction" >
+                    <sheet>
+                        <group col="2">
+                            <field name="emp_id" on_change="on_change_emp_id(emp_id)"/>
+                        </group>
+                        <group col="4">
+                            <field name="employee_id"/>
+                            <field name="position"/>
+                            <field name="department"/>
+                        </group>
+                        <group col="4">
+                            <field name="date"/>
+                            <field name="amount"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- canteen deduction-->
+        <record model="ir.actions.act_window" id="action_hr_canteen_deduction">
+            <field name="name">Canteen Deduction</field>
+            <field name="res_model">hr.canteen.deduction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--<menuitem parent="deduction_rules" id="menu_hr_canteen_deduction" action="action_hr_canteen_deduction"-->
+                  <!--sequence="1006"/>-->
+
+
+        <record model="ir.ui.view" id="view_hr_canteen_deduction_tree">
+            <field name="name">hr.canteen.deduction.tree</field>
+            <field name="model">hr.canteen.deduction</field>
+            <field name="arch" type="xml">
+                <tree string="Canteen Deduction">
+                    <field name="employee_pin"/>
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_canteen_deduction_form" model="ir.ui.view">
+            <field name="name">hr.canteen.deduction.form</field>
+            <field name="model">hr.canteen.deduction</field>
+            <field name="arch" type="xml">
+                <form string="Canteen Deduction" >
+                    <sheet>
+                        <group col="2">
+                            <field name="employee_pin" on_change="onchange_employee_pin(employee_pin)"/>
+                            <field name="emp_id" on_change="onchange_employee_id(emp_id)"/>
+                        </group>
+
+                        <group col="2">
+                            <!--<field name="employee_pin"/>-->
+                            <!--<field name="position"/>-->
+                            <!--<field name="department"/>-->
+                            <field name="date"/>
+                        </group>
+
+                        <group col="2">
+                            <field name="no_meal" on_change="nomealCalculationonchange(no_meal,meal_rate)"/>
+                            <field name="meal_rate" on_change="mealCalculationonchange(meal_rate,no_meal)"/>
+                            <field name="amount" />
+                        </group>
+                        <div>
+                            <field name="int_note" placeholder="Additional Note"/>
+                        </div>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!--Work Location Allowance Configuration-->
+        <!--<record model="ir.actions.act_window" id="action_work_location_configuration">-->
+            <!--<field name="name">Home Allowance Configuration</field>-->
+            <!--<field name="res_model">work.location.line</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">tree</field>-->
+        <!--</record>-->
+        <!--<menuitem parent="menu_hr_root_payroll_config" id="menu_work_location_config" action="action_work_location_configuration"-->
+                  <!--sequence="1006"/>-->
+
+
+        <!--<record model="ir.ui.view" id="view_work_location_all_tree">-->
+            <!--<field name="name">work.location.line.tree</field>-->
+            <!--<field name="model">work.location.line</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<tree string="Work Location Deduction" editable="bottom">-->
+                    <!--&lt;!&ndash;<field name="name"/>&ndash;&gt;-->
+                    <!--<field name="location_name"/>-->
+                    <!--<field name="allowance_amount"/>-->
+                    <!--&lt;!&ndash;<field name="amount"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="date"/>&ndash;&gt;-->
+                <!--</tree>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="view_work_location_allowance_form" model="ir.ui.view">-->
+            <!--<field name="name">work.location.allowance.form</field>-->
+            <!--<field name="model">work.location.allowance</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Work Location Allowance" >-->
+                    <!--<sheet>-->
+                        <!--<group col="2">-->
+                            <!--<field name="name"/>-->
+                            <!--<field name="work_location_line">-->
+                                <!--<tree string="Work Location Config" editable="bottom">-->
+                                    <!--<field name="location_name"/>-->
+                                    <!--<field name="allowance_amount"/>-->
+                                <!--</tree>-->
+                            <!--</field>-->
+                        <!--</group>-->
+                    <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <record model="ir.actions.act_window" id="action_hr_bonus">
+            <field name="name">Bonus</field>
+            <field name="res_model">hr.bonus</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--<menuitem parent="menu_hr_root_payroll_config" id="menu_hr_bonus" action="action_hr_bonus"-->
+                  <!--sequence="1006"/>-->
+
+
+        <record model="ir.ui.view" id="view_hr_bonus_tree">
+            <field name="name">hr.bonus.tree</field>
+            <field name="model">hr.bonus</field>
+            <field name="arch" type="xml">
+                <tree string="Bonus">
+                    <field name="emp_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_bonus_form" model="ir.ui.view">
+            <field name="name">hr.bonus.form</field>
+            <field name="model">hr.bonus</field>
+            <field name="arch" type="xml">
+                <form string="Bonus" >
+                    <sheet>
+                        <group col="2">
+                            <field name="emp_id" on_change="on_change_emp_id(emp_id)"/>
+                        </group>
+                        <group col="4">
+                            <field name="employee_id"/>
+                            <field name="position"/>
+                            <field name="department"/>
+                        </group>
+
+                        <group col="4">
+                            <field name="date"/>
+                            <field name="amount" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="contract_addition" model="ir.ui.view">
+            <field name="name">hr.contract.addition.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='advantages']" position="after">
+                    <field name="home_allowance"/>
+                    <field name="home_allowance_percent"/>
+                    <!--<field name="welfare_fund"/>-->
+                    <!--<field name="provident_fund"/>-->
+                    <field name="provident_fund_amount"/>
+                    <field name="transport_allowance"/>
+                    <field name="food_allowance"/>
+                    <!--<field name="emp_insurance"/>-->
+
+                    <!--<group col="2" colspan="2">-->
+                        <!--<field name="mobile_bill_limit"/>-->
+                        <!--<label for="mobile_bill_limit_exec" string="Mobilee Bill Extra"/>-->
+                        <!--<div>-->
+                            <!--<field name="mobile_bill_limit_exec" class="oe_inline"/> +-->
+                            <!--<field name="mobile_bill_extra" attrs="{'invisible':[('mobile_bill_limit_exec','!=',True)]}" class="oe_inline"/>-->
+                        <!--</div>-->
+                        <!--<field name="mobile_bill_remarks" attrs="{'invisible':[('mobile_bill_limit_exec','!=',True)]}"/>-->
+                    <!--</group>-->
+
+                    <!--<group col="2" colspan="2">-->
+                        <!--<field name="driver_allowance"/>-->
+                        <!--<label for="driver_all_limit_exec" string="Driver Allowance Extra"/>-->
+                        <!--<div>-->
+                            <!--<field name="driver_all_limit_exec" class="oe_inline"/> +-->
+                            <!--<field name="driver_all_extra" attrs="{'invisible':[('driver_all_limit_exec','!=',True)]}" class="oe_inline"/>-->
+                        <!--</div>-->
+                        <!--<field name="driver_all_remarks" attrs="{'invisible':[('driver_all_limit_exec','!=',True)]}"/>-->
+                    <!--</group>-->
+
+                    <!--<group col="2" colspan="2">-->
+                        <!--<field name="fuel_benefit"/>-->
+                        <!--<label for="fuel_benefit_limit_exec" string="Fuel Benefit Extra"/>-->
+                        <!--<div>-->
+                            <!--<field name="fuel_benefit_limit_exec" class="oe_inline"/> +-->
+                            <!--<field name="fuel_benefit_extra" attrs="{'invisible':[('fuel_benefit_limit_exec','!=',True)]}" class="oe_inline"/>-->
+                        <!--</div>-->
+                        <!--<field name="fuel_benefit_remarks" attrs="{'invisible':[('fuel_benefit_limit_exec','!=',True)]}"/>-->
+                    <!--</group>-->
+
+                </xpath>
+            </field>
+        </record>
+
+        <!--<record id="salary_structure_in_grade" model="ir.ui.view">-->
+            <!--<field name="name">hr.grade.add.form</field>-->
+            <!--<field name="model">hr.grade</field>-->
+            <!--<field name="inherit_id" ref="hr_job_grade.view_grade_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="/form[@string='Grade']/sheet/group/field[@name='name']" position="after">-->
+                    <!--<field name="salary_strucutre"/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+
+        <!--<record model="ir.actions.act_window" id="action_addition_deduction">-->
+            <!--<field name="name">Addition or Deduction</field>-->
+            <!--<field name="res_model">addition.deduction</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">tree,form</field>-->
+
+        <!--</record>-->
+
+
+        <!--<record model="ir.ui.view" id="view_addition_deduction_tree">-->
+            <!--<field name="name">addition.deduction.tree</field>-->
+            <!--<field name="model">addition.deduction</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<tree string="Configure Rules">-->
+
+                    <!--<field name="sal_rule"/>-->
+                    <!--<field name="t_date"/>-->
+                    <!--<field name="f_amount"/>-->
+                    <!--<field name="employee_sel"/>-->
+
+                <!--</tree>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="view_addition_deduction_form" model="ir.ui.view">-->
+            <!--<field name="name">addition.deduction.form</field>-->
+            <!--<field name="model">addition.deduction</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Rule Addition or Deduction" >-->
+                    <!--<sheet>-->
+
+                        <!--<group col="2">-->
+                            <!--<field name="sal_rule"/>-->
+                            <!--<field name="t_date"/>-->
+                            <!--<field name="f_amount"/>-->
+                            <!--<button icon="gtk-execute" string="Generate" name="compute_sheet" type="object" class="oe_highlight"/>-->
+
+                            <!--<group colspan="4">-->
+                                <!--<separator string="Employees" colspan="4"/>-->
+                                <!--<newline/>-->
+                                <!--<field name="employee_sel" nolabel="1"/>-->
+                            <!--</group>-->
+
+
+                        <!--</group>-->
+
+                    <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<menuitem parent="menu_hr_root_payroll_config" id="menu_action_addition_deduction" action="action_addition_deduction"-->
+                  <!--sequence="1000"/>-->
+
+        <!--<record id="salary_rule_range_addition" model="ir.ui.view">-->
+            <!--<field name="name">hr.salary.rule.range.form</field>-->
+            <!--<field name="model">hr.salary.rule</field>-->
+            <!--<field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//field[@name='code']" position="after">-->
+                    <!--<field name="income_tax"/>-->
+                    <!--<field name="home_allowance"/>-->
+                    <!--<field name="leave_wto_pay"/>-->
+                    <!--<field name="absent_deduction"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='amount_python_compute']" position="before">-->
+                    <!--<field name="amount_range" attrs="{'invisible':[('amount_select','&lt;&gt;','amount_range')], 'required': [('amount_select','=','amount_range')]}">-->
+                        <!--<tree string="Ranges" editable="bottom">-->
+                            <!--<field name="range_from"/>-->
+                            <!--<field name="range_to"/>-->
+                            <!--<field name="range_amount"/>-->
+                        <!--</tree>-->
+                    <!--</field>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+    </data>
+</openerp>
+

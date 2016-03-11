@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_interview_question_form">
+        <field name="name">interview.question.form</field>
+        <field name="model">interview.question</field>
+        <field name="arch" type="xml">
+             <form string="interview.question">
+                 <group colspan="2">
+                    <group>
+                        <field name="name"/>
+
+                    </group>
+                    <group></group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_interview_question_tree">
+        <field name="name">interview.question.tree</field>
+        <field name="model">interview.question</field>
+        <field name="arch" type="xml">
+            <tree string="interview.question">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_interview_question">
+        <field name="name">Interview Questions</field>
+        <field name="res_model">interview.question</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Questions"
+              id="child_menu_interview_question_item"
+              parent="hr_recruitment.menu_hr_recruitment_recruitment"
+              action="action_interview_question"/>
+
+
+
+    <record model="ir.ui.view" id="view_interview_question_set_form">
+        <field name="name">interview.question.form</field>
+        <field name="model">interview.question.set</field>
+        <field name="arch" type="xml">
+             <form string="interview_question_set" version="7.0">
+                 <group colspan="2">
+                    <group>
+                        <field name="name"/>
+                        <field name="question" widget="one2many_list">
+                        <tree editable="bottom">
+                                <field name="name" />
+                                <field name="weight" sum="Total Marks"/>
+                        </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="marks_for_set"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_interview_question_set_tree">
+        <field name="name">interview.question.tree</field>
+        <field name="model">interview.question.set</field>
+        <field name="arch" type="xml">
+            <tree string="interview_question_set">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_interview_question_set">
+        <field name="name">Questions Set</field>
+        <field name="res_model">interview.question.set</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Questions Set"
+              id="child_menu_interview_question_set_item"
+              parent="hr_recruitment.menu_hr_recruitment_recruitment"
+              action="action_interview_question_set"/>
+
+
+    <record model="ir.ui.view" id="view_interview_likert_scale_form">
+        <field name="name">interview.likert.scale.form</field>
+        <field name="model">interview.likert.scale</field>
+        <field name="arch" type="xml">
+             <form string="interview_likert_scale" version="7.0">
+                 <group colspan="2">
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="scale"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_interview_likert_scale_tree">
+        <field name="name">interview.likert.scale.tree</field>
+        <field name="model">interview.likert.scale</field>
+        <field name="arch" type="xml">
+            <tree string="interview_likert_scale">
+                <field name="name"/>
+                <field name="scale"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_interview_likert_scale">
+        <field name="name">Likert Scale</field>
+        <field name="res_model">interview.likert.scale</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Likert Scale"
+              id="child_menu_interview_likert_scale_item"
+              parent="hr_recruitment.menu_hr_recruitment_recruitment"
+              action="action_interview_likert_scale"/>
+
+
+</data>
+</openerp>

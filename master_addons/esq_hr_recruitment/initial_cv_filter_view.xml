@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_cv_filter_form">
+        <field name="name">cv.filter.form</field>
+        <field name="model">hr.cv.filter</field>
+        <field name="arch" type="xml">
+             <form string="cv.filter" >
+                 <header>
+                        <button name="primary_select_button" string="Select For Next Step" type="object" class="oe_highlight"  />
+                 </header>
+                 <sheet>
+                 <group colspan="2">
+                        <group>
+                            <field name="upload_photo" widget='image' />
+                            <field name="job_id"/>
+                            <field name="recruitment_no"/>
+                        </group>
+                        <group></group>
+                 </group>
+                 <group colspan="2">
+                     <group>
+                        <field name="applicant_title" />
+                        <field name="partner_name"/>
+                        <field name="father_name" />
+                        <field name="mother_name" />
+                        <field name="partner_phone" />
+                        <field name="partner_mobile" />
+                        <field name="applicant_gender" />
+                        <field name="nationality" />
+                        <field name="nid" />
+                        <field name="email_from" widget="email"/>
+                        <field name="date_of_birth" />
+                        <field name="present_address" />
+                        <field name="permanent_address"  />
+                     </group>
+                     <group>
+                         <div>
+                                <group string="Academic Qualification">
+                                    <field name="type_id" placeholder="Highest Degree" required='True'/>
+                                    <field name="institution" />
+                                </group>
+                                <group string="Experience">
+                                    <field name="latest_designation" />
+                                    <field name="company" />
+                                </group>
+                                <field name="resume" widget="many2many_binary" string="Upload Resume" />
+                         </div>
+                     </group>
+                 </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_cv_filter_tree">
+        <field name="name">cv.filter.tree</field>
+        <field name="model">hr.cv.filter</field>
+        <field name="arch" type="xml">
+            <tree string="cv.filter">
+               <field name="job_id"/>
+               <field name="recruitment_no"/>
+               <field name="partner_name" />
+               <field name="partner_phone" />
+               <field name="partner_mobile" />
+               <field name="type_id" />
+               <field name="institution" />
+               <field name="latest_designation" />
+               <field name="company" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cv_filter">
+        <field name="name">Initial CV Filter</field>
+        <field name="res_model">hr.cv.filter</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+        <menuitem name="Initial CV Filter" id="child_menu_job_application_form_filter_item" parent="menu_requisition_requisition_item" action="action_cv_filter"/>
+    </data>
+</openerp>

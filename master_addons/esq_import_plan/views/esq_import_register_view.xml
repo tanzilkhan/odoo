@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="import_register_form" model="ir.ui.view">
+            <field name="name">import.register.form</field>
+            <field name="model">import.register</field>
+            <field name="arch" type="xml">
+                <form string="Import Register">
+                    <header>
+                        <button string="Forward" name="forward1" states="pro_inv" type="object" class="oe_highlight"/>
+                        <button string="Forward" name="forward2" states="ins_col_nt" type="object" class="oe_highlight"/>
+                        <button string="Forward" name="forward3" states="lc_n" type="object" class="oe_highlight"/>
+                        <button string="Forward" name="forward4" states="eta_etd" type="object" class="oe_highlight"/>
+                        <button string="Forward" name="forward5" states="doc_ret" type="object" class="oe_highlight"/>
+                        <button string="Forward" name="forward6" states="ins_pol" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_colors='{"pro_inv":"blue","ins_col_nt":"green","lc_n":"blue","eta_etd":"blue","doc_ret":"blue","ins_pol":"blue","done_n":"red",}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="IR Number" attrs="{'readonly':[('state','!=','pro_inv')]}"/>
+                        </h1>
+                    </div>
+                        <group colspan="2">
+                            <group>
+                                <field name="supplier_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
+                                <field name="insurance_company" attrs="{'invisible':[('state','=','pro_inv')]}"/>
+                                <field name="cover_note_no" attrs="{'invisible':[('state','=','pro_inv')]}"/>
+                                <field name="proforma_invoice_no" />
+                                <field name="insurance_policy_collection" attrs="{'invisible':[('state','not in',['ins_pol','done_n'])]}"/>
+                            </group>
+                            <group>
+                                <field name="proforma_invoice_date"/>
+                                <field name="insurance_note_col_date" attrs="{'invisible':[('state','!=','ins_pol')]}"/>
+                                <field name="eta_date" attrs="{'invisible':[('state','not in',['eta_etd', 'doc_ret','ins_pol','done_n'])]}"/>
+                                <field name="etd_date" attrs="{'invisible':[('state','not in',['eta_etd', 'doc_ret','ins_pol','done_n'])]}"/>
+                                <field name="doc_ret_date" attrs="{'invisible':[('state','not in',['doc_ret','ins_pol','done_n'])]}"/>
+                                <field name="lc_value" attrs="{'invisible':[('state','not in',['doc_ret','ins_pol','done_n'])]}"/>
+                                <field name="requisition_no"/>
+                                <field name="purchase_order_no"/>
+                            </group>
+                        </group>
+                        <group>
+
+                        </group>
+                        <notebook colspan="2">
+                        <page string="Invoice Lines">
+                            <field name="invoice_lines_tab" widget="one2many_list">
+                                <tree string="Invoice Lines" editable="bottom" nolabel="1">
+                                    <field name="product_name" />
+                                    <field name="product_desc" />
+                                    <field name="sch_date" />
+                                    <field name="quantity"/>
+                                    <field name="product_uom"/>
+                                    <field name="unit_price"/>
+                                    <field name="inv_taxes" />
+                                    <field name="inv_subtotal"/>
+                                </tree>
+                            </field>
+
+
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_untaxed" widget="monetary"/>
+                                <field name="amount_tax" widget="monetary" />
+                                <field name="amount_total" class="oe_subtotal_footer_separator" widget="monetary"/>
+                            </group>
+                            <div class="oe_clear">
+                                <label for="comment"/>
+                            </div>
+                            <field name="comment" class="oe_inline" placeholder="Additional notes..."/>
+
+                        </page>
+                        <page string="LC Info" attrs="{'invisible':[('state','not in',['lc_n','eta_etd', 'doc_ret','ins_pol','done_n'])]}">
+                            <field name="lc_info" widget="one2many_list">
+                                <tree string="LC Info" editable="bottom" nolabel="1">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="lc_no" />
+                                    <field name="lc_date" />
+                                    <field name="lc_exp_date" />
+                                    <field name="lc_value"/>
+                                    <field name="lc_issue_bnk"/>
+                                    <field name="lc_payment_mode"/>
+                                    <field name="lc_mode"/>
+                                </tree>
+                            </field>
+                        </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="import_register_tree" model="ir.ui.view">
+            <field name="name">import.register.tree</field>
+            <field name="model">import.register</field>
+            <field name="arch" type="xml">
+                    <tree string="Import Register">
+                        <field name="supplier_id"/>
+                        <field name="cover_note_no"/>
+                        <field name="proforma_invoice_no" />
+                        <field name="proforma_invoice_date"/>
+                        <field name="eta_date"/>
+                        <field name="etd_date"/>
+                        <field name="lc_value"/>
+                        <field name="requisition_no"/>
+                        <field name="purchase_order_no"/>
+                    </tree>
+            </field>
+        </record>
+
+        <record id="open_view_import_register" model="ir.actions.act_window">
+            <field name="name">Import Register</field>
+            <field name="res_model">import.register</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Commercial" id="menu_import_root" sequence="10"/>
+        <menuitem id="menu_import_main" parent="menu_import_root" name="Import" sequence="1"/>
+        <menuitem id="menu_config_main" parent="menu_import_root" name="Configuration" sequence="100"/>
+        <menuitem id="menu_import_register" action="open_view_import_register" parent="menu_import_main" name="Import Register" sequence="1"/>
+
+        <record id="lc_modes_form" model="ir.ui.view">
+            <field name="name">lc.modes.form</field>
+            <field name="model">lc.modes</field>
+            <field name="arch" type="xml">
+                <form string="LC Modes">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="lc_modes_tree" model="ir.ui.view">
+            <field name="name">lc.modes.tree</field>
+            <field name="model">lc.modes</field>
+            <field name="arch" type="xml">
+                <tree string="LC Modes">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_lc_modes" model="ir.actions.act_window">
+            <field name="name">LC Modes</field>
+            <field name="res_model">lc.modes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_lc_config_register" action="open_view_lc_modes" parent="menu_config_main" name="LC Modes" sequence="1"/>
+
+        <record id="lc_payment_modes_form" model="ir.ui.view">
+            <field name="name">lc.payment.modes.form</field>
+            <field name="model">lc.payment.modes</field>
+            <field name="arch" type="xml">
+                <form string="LC Payment Modes">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="lc_payment_modes_tree" model="ir.ui.view">
+            <field name="name">lc.payment.modes.tree</field>
+            <field name="model">lc.payment.modes</field>
+            <field name="arch" type="xml">
+                <tree string="LC Payment Modes">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="open_view_lc_payment_modes" model="ir.actions.act_window">
+            <field name="name">LC Payment Modes</field>
+            <field name="res_model">lc.payment.modes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_lc_payment_config_register" action="open_view_lc_payment_modes" parent="menu_config_main" name="LC Payment Modes" sequence="1"/>
+
+    </data>
+</openerp>

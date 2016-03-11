@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_requisition_form">
+        <field name="name">manpower.requisition.form</field>
+        <field name="model">manpower.requisition</field>
+        <field name="arch" type="xml">
+             <form string="requisition">
+                  <header>
+                        <!--<button name="job_incharge" string="Create Recruitment" states="incharge" type="object" class="oe_highlight" />-->
+                        <button name="job_head_dept" string="Approve" states="head_dept" type="object" class="oe_highlight" />
+                        <button name="job_cancel" string="Cancel" states="head_dept" type="object" class="oe_highlight" />
+                        <button name="job_head_hr" string="Approve" states="head_hr" type="object" class="oe_highlight" />
+                        <button name="job_cancel" string="Cancel" states="head_hr" type="object" class="oe_highlight" />
+                        <button name="job_ceo" string="Approve" states="ceo" type="object" class="oe_highlight" />
+                        <button name="job_cancel" string="Decline" states="ceo" type="object" class="oe_highlight" />
+                        <!--<button name="job_draft" string="Draft" states="cancel" type="object" class="oe_highlight" />-->
+                        <button name="launch_recruitment" string="Launch Recruitment" states="recruitment_desk" type="object" class="oe_highlight" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,incharge,head_dept,head_hr,ceo,recruitment_desk"/>
+                    </header>
+                 <sheet>
+                     <div>
+                        <group colspan="2">
+                        <group>
+                            <field name="name"/>
+                            <field name="dept_name"/>
+                            <field name="date_of_requistion" />
+                            <!--<field name="expected_employees" />-->
+                            <!--<field name="no_of_employee" />-->
+                            <!--<field name="no_required_workforce" />-->
+                            <field name="job_title" domain="[('department_id','=',dept_name)]" />
+                            <field name="job_level"/>
+                            <field name="job_type"/>
+
+                        </group>
+                        <group>
+                            <field name="existing_emp" attrs="{'invisible':[('state','not in',('incharge'))]}" />
+                            <!--<field name="shortage_emp" attrs="{'invisible':[('state','not in',('incharge'))]}" />-->
+                            <!--<field name="budget_comp" />-->
+                        </group>
+                        </group>
+                     </div>
+                        <group>
+                            <!--<field name="justification" />-->
+                            <field name="hr_comments_remarks" attrs="{'invisible':[('state','not in',('head_hr','ceo'))],'readonly':[('state','in',('ceo'))]}"/>
+                        </group>
+                        <group>
+                            <field name="requisition_by" />
+                        </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_requisition_tree">
+        <field name="name">manpower.requisition.tree</field>
+        <field name="model">manpower.requisition</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="requisition">
+                <!--<field name="expected_employees" />-->
+                <!--<field name="no_of_employee" />-->
+                <field name="name"/>
+                <field name="dept_name" />
+                <field name="date_of_requistion" />
+                <field name="no_required_workforce" />
+                <!--<field name="job_title" />-->
+                <!--<field name="job_level" />
+                <field name="job_type" />-->
+                <field name="existing_emp" />
+                <field name="shortage_emp" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_requisition">
+        <field name="name">Manpower Requisition</field>
+        <field name="res_model">manpower.requisition</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!--<menuitem name="Recruitment" id="menu_requisition_requisition_item" parent="hr.menu_hr_recruitment_recruitment" />-->
+    <menuitem name="Manpower Requisition" id="child_menu_requisition_requisition_item"
+              parent="base.menu_crm_case_job_req_main" action="action_requisition"/>
+</data>
+</openerp>

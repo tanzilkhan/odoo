@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="mrp_bom_modification" model="ir.ui.view">
+            <field name="name">mrp.bom.modfication.view.form</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form[@string='Bill of Material']/group/group/div[@groups='mrp.group_mrp_routings']" position="after">
+                    <field name="item_weight" on_change="onchange_item_weight(item_weight)"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mrp_bom_modification_m" model="ir.ui.view">
+            <field name="name">mrp.bom.modfication.view.l.form</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form[@string='Bill of Material']/notebook/page[@string='Components']/field[@name='bom_line_ids']/tree[@string='Components']/field[@name='type']" position="after">
+                    <field name="weight_percent" placeholder="%" help="Please put the percentage number" on_change="percent_calculation(weight_percent)" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

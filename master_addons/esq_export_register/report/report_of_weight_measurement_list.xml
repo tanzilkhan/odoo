@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Custom report.-->
+<openerp>
+<data>
+
+    <template id="weight_measurement_document">
+     <t t-call="report.html_container">
+         <t t-foreach="docs" t-as="o">
+              <div class="page">
+                  <!--header-->
+                  <div class="row">
+                      <div class="row">
+                          <img class="col-xs-6 img img-responsive" src="/esq_export_register/static/description/esquire.jpg"/>
+                      </div>
+                      <div class="row">
+                          <div class="col-xs-7 col-xs-offset-1">
+                              <p>HEAD OFFICE:</p>
+                              <p>IDEAL TRADE CENTER,102,SHAHEEDTAJUDDIN AHMED SARANI,TEJGAON I/A,DHAKA-1208;TEL:9129396,9113161,9112539; FAX:880-2-8122181 ;E-mail:esquire@bangla.net</p>
+                          </div>
+                          <div class="col-xs-4">
+                              <p>Factory:</p>
+                              <p>JAMALDI,GAZARIA,MUNSHIGONJ.</p>
+                          </div>
+                      </div>
+                  </div>
+                  <!--header end-->
+                    <hr/>
+                  <div class="row">
+                         <h3 class="col-xs-offset-4">Weight and Measurement</h3>
+                         <hr/>
+
+                     </div>
+                     <div class="row">
+
+                         <table>
+                             <tr class="row">
+                                 <td colspan="2" style="border:2px solid black">COMMODITY and DESCRIPTION</td>
+
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5" style="border:2px solid black">Consignee</td>
+                                 <td class="col-xs-7" style="border:2px solid black"><span t-field="o.register_lines.buyer_name"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5" style="border:2px solid black">Commercial Invoice No</td>
+                                 <td class="col-xs-7" style="border:2px solid black"><span t-field="o.register_lines.comm_invoice_no"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5" style="border:2px solid black">Proforma Invoice No</td>
+                                 <td class="col-xs-7" style="border:2px solid black"><span t-field="o.register_lines.pi_no"/><span t-field="o.register_lines.exp_lc_date"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5" style="border:2px solid black">L/c No</td>
+                                 <td class="col-xs-7" style="border:2px solid black"><span t-field="o.register_lines.exp_lc_no"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-5" style="border:2px solid black">Date</td>
+                                 <td class="col-xs-7" style="border:2px solid black"><span t-field="o.register_lines.exp_lc_date"/></td>
+                             </tr>
+                         </table>
+                         <table>
+                             <tr class="row">
+                                 <td class="col-xs-6" style="border:2px solid black">GOODS DESCRIPTION</td>
+                                 <td class="col-xs-6" style="border:2px solid black">Quantity</td>
+                             </tr>
+                             <tr class="row" t-foreach="o.register_lines" t-as="l">
+                                <td style="border:2px solid black"><span t-field="l.pi_description"/></td>
+                                <td style="border:2px solid black"><span t-field="l.pi_quant"/></td>
+                             </tr>
+                             <tr class="row">
+                                 <td class="col-xs-6" style="border:2px solid black">Export Contract No.</td>
+                                 <td class="col-xs-6" style="border:2px solid black">
+                                     <h6>FOR ESQUIRE ACCESSORIES LIMITED</h6>
+                                        <br/>
+                                        <br/>
+                                     <h5>AUTHORIZED SIGNATURE</h5>
+                                 </td>
+                             </tr>
+                         </table>
+                     </div>
+                     <br/>
+                     <br/>
+
+                     <br/>
+
+             </div>
+
+         </t>
+     </t>
+    </template>
+
+</data>
+</openerp>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_joining_form_form">
+        <field name="name">joining_form.form</field>
+        <field name="model">hr.applicant</field>
+        <field name="arch" type="xml">
+             <form string="joining_form">
+                 <group colspan="2">
+                    <group>
+                        <field name="joining_date"/>
+                        <field name="induction"/>
+                        <field name="domain_it_dept"/>
+                        <field name="security_dept"/>
+                        <field name="support_service"/>
+                    </group>
+                    <group></group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+
+
+
+    <record model="ir.ui.view" id="view_joining_form_tree">
+        <field name="name">joining_form.tree</field>
+        <field name="model">hr.applicant</field>
+        <field name="arch" type="xml">
+            <tree string="joining_form">
+                <field name="joining_date"/>
+                <field name="induction"/>
+                <field name="domain_it_dept"/>
+                <field name="security_dept"/>
+                <field name="support_service"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record model="ir.actions.act_window" id="action_joining_form">
+        <field name="name">Joining Form</field>
+        <field name="res_model">hr.applicant</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Joining Form" id="child_menu_joining_form_item" parent="menu_requisition_requisition_item" action="action_joining_form"/>
+</data>
+</openerp>

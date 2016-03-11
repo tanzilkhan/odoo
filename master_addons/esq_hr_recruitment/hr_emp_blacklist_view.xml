@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.actions.act_window" id="action_black_list_form">
+            <field name="name">Black Listed Applicant</field>
+            <field name="res_model">hr.applicant</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('black_list','=',True)]</field>
+        </record>
+
+        <menuitem name="Black Listed Applicant" id="child_menu_black_list_item" parent="menu_requisition_requisition_item" action="action_black_list_form"/>
+    </data>
+</openerp>

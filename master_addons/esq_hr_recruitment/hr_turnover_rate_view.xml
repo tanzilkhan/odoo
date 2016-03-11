@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_turnover_rate_form">
+            <field name="name">turnover.rate.form</field>
+            <field name="model">hr.turnover.rate</field>
+            <field name="arch" type="xml">
+                <form string="turnover.rate">
+                    <group>
+                        <div>
+                            <group>
+                                <div>
+                                    <field name="turnover_line" readonly="1">
+                                        <tree editable="bottom">
+                                            <!--<field name="hr.turnover.rate"/>-->
+                                            <field name="month"/>
+                                            <field name="existing_emp"/>
+                                            <field name="separated_emp"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </group>
+
+                            <group>
+                                <field name="date" on_change="onchange_date(date)" invisible="1"/>
+
+
+                                <field name="average" readonly="1"/>
+                                <field name="turnover_rate" readonly="1"/>
+
+                            </group>
+                        </div>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!--<record model="ir.ui.view" id="view_turnover_line_form">-->
+        <!--<field name="name">turnover.rate.line.form</field>-->
+        <!--<field name="model">hr.turnover.rate.line</field>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<form string="turnover.line"  version="7.0">-->
+        <!--<group>-->
+        <!--<field name="month"/>-->
+        <!--<field name="existing_emp"/>-->
+        <!--<field name="separated_emp" />-->
+        <!--</group>-->
+        <!--</form>-->
+        <!--</field>-->
+        <!--</record>-->
+
+        <!--<record model="ir.ui.view" id="view_turnover_rate_tree">-->
+        <!--<field name="name">turnover.rate.tree</field>-->
+        <!--<field name="model">hr.turnover.rate</field>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<tree string="turnover.rate">-->
+
+        <!--</tree>-->
+        <!--</field>-->
+        <!--</record>-->
+
+        <!--<record model="ir.ui.view" id="view_turnover_line_tree">-->
+        <!--<field name="name">turnover.rate.line.tree</field>-->
+        <!--<field name="model">hr.turnover.rate.line</field>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<tree string="turnover.line">-->
+
+        <!--</tree>-->
+        <!--</field>-->
+        <!--</record>-->
+
+
+        <record model="ir.actions.act_window" id="action_turnover_rate_1">
+            <field name="name">Turnover Rate</field>
+            <field name="res_model">hr.turnover.rate</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Turnover Rate" id="child_menu_action_turnover_rate_item" parent="menu_requisition_requisition_item" action="action_turnover_rate_1"/>
+
+        <!--<record model="ir.actions.act_window" id="action_turnover_line">-->
+        <!--<field name="name">Turnover Line</field>-->
+        <!--<field name="res_model">hr.turnover.rate.line</field>-->
+        <!--<field name="view_type">form</field>-->
+        <!--<field name="view_mode">tree,form</field>-->
+        <!--</record>-->
+
+        <!--<menuitem name="Turnover Line" id="child_menu_action_turnover_line_item" parent="menu_requisition_requisition_item" action="action_turnover_line"/>-->
+
+    </data>
+</openerp>
